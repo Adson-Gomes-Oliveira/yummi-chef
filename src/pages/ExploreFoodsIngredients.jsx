@@ -22,7 +22,7 @@ export default function ExploreFoodsIngredients() {
             return (<IngredientCard
               key={ i }
               name={ ingredientInfo.strIngredient }
-              index={ index }
+              index={ i }
             />);
           }
           return null;
