@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Header from './components/Header';
+import BottomMenu from './components/BottomMenu';
 
 function App() {
   return (
@@ -13,50 +14,105 @@ function App() {
       <Route path="/drinks/:id/in-progress" render={ () => <h1>Drinks progress</h1> } />
       <Route
         path="/foods"
-        render={ () => <Header name="Foods" isSearched /> }
+        render={ () => (
+          <>
+            <Header name="Foods" isSearched />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         path="/drinks"
-        render={ () => <Header name="Drinks" isSearched /> }
+        render={ () => (
+          <>
+            <Header name="Drinks" isSearched />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         exact
         path="/explore"
-        render={ () => <Header name="Explore" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         exact
         path="/explore/foods"
-        render={ () => <Header name="Explore Foods" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore Foods" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         exact
         path="/explore/drinks"
-        render={ () => <Header name="Explore Drinks" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore Drinks" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         path="/explore/foods/ingredients"
-        render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore Food Ingredients" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         path="/explore/drinks/ingredients"
-        render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore Drink Ingredients" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         path="/explore/foods/nationalities"
-        render={ () => <Header name="Explore Nationalities" isSearched /> }
+        render={ () => (
+          <>
+            <Header name="Explore Nationalities" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         path="/profile"
-        render={ () => <Header name="Profile" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Profile" isSearched={ false } />
+            <BottomMenu />
+          </>
+        ) }
       />
       <Route
         path="/done-recipes"
-        render={ () => <Header name="Done Recipes" /> }
+        render={ () => (
+          <>
+            <Header name="Done Recipes" isSearched={ false } />
+            {/* <BottomMenu /> */}
+          </>
+        ) }
       />
       <Route
         path="/favorite-recipes"
-        render={ () => <Header name="Favorite Recipes" /> }
+        render={ () => (
+          <>
+            <Header name="Favorite Recipes" isSearched={ false } />
+            {/* <BottomMenu /> */}
+          </>
+        ) }
       />
     </Switch>
   );
