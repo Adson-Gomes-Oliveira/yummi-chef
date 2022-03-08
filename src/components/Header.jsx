@@ -9,7 +9,7 @@ export default function Header({ name, isSearched }) {
   const { isOpenedSearch: { isOpened },
     openOrCloseSearchInput } = useContext(recipesContext);
   return (
-    <section>
+    <header>
       <Link to="/profile">
         <img data-testid="profile-top-btn" alt="profile icon" src={ profileImg } />
       </Link>
@@ -25,7 +25,7 @@ export default function Header({ name, isSearched }) {
           </button>)
         : null}
       {isOpened ? <input data-testid="search-input" type="text" /> : null}
-    </section>
+    </header>
   );
 }
 
