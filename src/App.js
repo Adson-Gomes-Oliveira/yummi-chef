@@ -54,10 +54,6 @@ function App() {
         render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
       />
       <Route
-        path="/explore/drinks/ingredients"
-        render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
-      />
-      <Route
         path="/explore/foods/nationalities"
         render={ () => <Header name="Explore Nationalities" isSearched /> }
       />
