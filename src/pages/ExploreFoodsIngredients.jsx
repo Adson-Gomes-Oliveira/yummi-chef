@@ -17,10 +17,10 @@ export default function ExploreFoodsIngredients() {
   return (
     <div>
       {typeof ingredients !== 'undefined'
-        ? ingredients.map((ingredientInfo, index) => {
-          if (index < MAX_RENDER_INGREDIENTS) {
+        ? ingredients.map((ingredientInfo, i) => {
+          if (i < MAX_RENDER_INGREDIENTS) {
             return (<IngredientCard
-              key={ index }
+              key={ i }
               name={ ingredientInfo.strIngredient }
               index={ index }
             />);
