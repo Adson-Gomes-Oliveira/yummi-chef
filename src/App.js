@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Header from './components/Header';
 import Explore from './pages/Explore';
+import ExploreFoods from './pages/ExploreFoods';
+import ExploreDrinks from './pages/ExploreDrinks';
 
 function App() {
   return (
@@ -32,12 +34,20 @@ function App() {
       <Route
         exact
         path="/explore/foods"
-        render={ () => <Header name="Explore Foods" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore" isSearched={ false } />
+            <ExploreFoods />
+          </>) }
       />
       <Route
         exact
         path="/explore/drinks"
-        render={ () => <Header name="Explore Drinks" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore" isSearched={ false } />
+            <ExploreDrinks />
+          </>) }
       />
       <Route
         path="/explore/foods/ingredients"
