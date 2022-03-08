@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
+import ExploreFoodsIngredients from './pages/ExploreFoodsIngredients';
+import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 
 function App() {
   return (
@@ -51,7 +53,19 @@ function App() {
       />
       <Route
         path="/explore/foods/ingredients"
-        render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore Ingredients" isSearched={ false } />
+            <ExploreFoodsIngredients />
+          </>) }
+      />
+      <Route
+        path="/explore/drinks/ingredients"
+        render={ () => (
+          <>
+            <Header name="Explore Ingredients" isSearched={ false } />
+            <ExploreDrinksIngredients />
+          </>) }
       />
       <Route
         path="/explore/foods/nationalities"
