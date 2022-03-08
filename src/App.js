@@ -64,7 +64,7 @@ function App() {
         path="/explore/foods/ingredients"
         render={ () => (
           <>
-            <Header name="Explore Food Ingredients" isSearched={ false } />
+            <Header name="Explore Ingredients" isSearched={ false } />
             <BottomMenu />
           </>
         ) }
@@ -73,7 +73,7 @@ function App() {
         path="/explore/drinks/ingredients"
         render={ () => (
           <>
-            <Header name="Explore Drink Ingredients" isSearched={ false } />
+            <Header name="Explore Ingredients" isSearched={ false } alt />
             <BottomMenu />
           </>
         ) }
@@ -82,7 +82,7 @@ function App() {
         path="/explore/foods/nationalities"
         render={ () => (
           <>
-            <Header name="Explore Nationalities" isSearched={ false } />
+            <Header name="Explore Nationalities" isSearched />
             <BottomMenu />
           </>
         ) }
