@@ -2,6 +2,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Header from './components/Header';
+import Explore from './pages/Explore';
+import ExploreFoods from './pages/ExploreFoods';
+import ExploreDrinks from './pages/ExploreDrinks';
+import ExploreFoodsIngredients from './pages/ExploreFoodsIngredients';
+import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import BottomMenu from './components/BottomMenu';
 
 function App() {
@@ -36,9 +41,9 @@ function App() {
         render={ () => (
           <>
             <Header name="Explore" isSearched={ false } />
+            <Explore />
             <BottomMenu />
-          </>
-        ) }
+          </>) }
       />
       <Route
         exact
@@ -46,9 +51,9 @@ function App() {
         render={ () => (
           <>
             <Header name="Explore Foods" isSearched={ false } />
+            <ExploreFoods />
             <BottomMenu />
-          </>
-        ) }
+          </>) }
       />
       <Route
         exact
@@ -56,18 +61,18 @@ function App() {
         render={ () => (
           <>
             <Header name="Explore Drinks" isSearched={ false } />
+            <ExploreDrinks />
             <BottomMenu />
-          </>
-        ) }
+          </>) }
       />
       <Route
         path="/explore/foods/ingredients"
         render={ () => (
           <>
             <Header name="Explore Ingredients" isSearched={ false } />
+            <ExploreFoodsIngredients />
             <BottomMenu />
-          </>
-        ) }
+          </>) }
       />
       <Route
         path="/explore/drinks/ingredients"
@@ -75,8 +80,8 @@ function App() {
           <>
             <Header name="Explore Ingredients" isSearched={ false } alt />
             <BottomMenu />
-          </>
-        ) }
+            <ExploreDrinksIngredients />
+          </>) }
       />
       <Route
         path="/explore/foods/nationalities"
