@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
+import './styles/BottomMenu.css';
 
 function BottomMenu() {
   return (
-    <section data-testid="footer">
-      <Link to="/drinks" data-testid="drinks-bottom-btn">
-        <img src={ drinkIcon } alt="drink-icon" />
-      </Link>
-      <Link to="/explore" data-testid="explore-bottom-btn">
-        <img src={ exploreIcon } alt="explore-icon" />
-      </Link>
-      <Link to="/foods" data-testid="food-bottom-btn">
-        <img src={ mealIcon } alt="meal-icon" />
-      </Link>
+    <section className="footer" data-testid="footer">
+      <div className="menu-icons">
+        <Link to="/drinks">
+          <img src={ drinkIcon } alt="drink-icon" data-testid="drinks-bottom-btn" />
+        </Link>
+        <Link to="/explore">
+          <img src={ exploreIcon } alt="explore-icon" data-testid="explore-bottom-btn" />
+        </Link>
+        <Link to="/foods">
+          <img src={ mealIcon } alt="meal-icon" data-testid="food-bottom-btn" />
+        </Link>
+      </div>
     </section>
   );
 }
