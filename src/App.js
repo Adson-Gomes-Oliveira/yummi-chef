@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Header from './components/Header';
+import Explore from './pages/Explore';
 
 function App() {
   return (
@@ -22,7 +23,11 @@ function App() {
       <Route
         exact
         path="/explore"
-        render={ () => <Header name="Explore" isSearched={ false } /> }
+        render={ () => (
+          <>
+            <Header name="Explore" isSearched={ false } />
+            <Explore />
+          </>) }
       />
       <Route
         exact
