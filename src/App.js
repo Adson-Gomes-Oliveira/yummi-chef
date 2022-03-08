@@ -1,23 +1,63 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Login from './pages/Login';
+import Header from './components/Header';
 
 function App() {
   return (
     <Switch>
-      <Route exact path="/" component="..." />
-      <Route path="/foods" component="..." />
-      <Route path="/drinks" component="..." />
-      <Route path="/foods/:id" component="..." />
-      <Route path="/drinks/:id" component="..." />
-      <Route path="/explore" component="..." />
-      <Route path="/explore/foods" component="..." />
-      <Route path="/explore/drinks" component="..." />
-      <Route path="/explore/foods/ingredients" component="..." />
-      <Route path="/explore/drinks/ingredients" component="..." />
-      <Route path="/explore/foods/nationalities" component="..." />
-      <Route path="/profile" component="..." />
-      <Route path="/done-recipes" component="..." />
-      <Route path="/favorite-recipes" component="..." />
+      <Route exact path="/" component={ Login } />
+      <Route path="/foods/:id" render={ () => <h1>Food detail</h1> } />
+      <Route path="/drinks/:id" render={ () => <h1>Drink detail</h1> } />
+      <Route path="/foods/:id/in-progress" render={ () => <h1>Food progress</h1> } />
+      <Route path="/drinks/:id/in-progress" render={ () => <h1>Drinks progress</h1> } />
+      <Route
+        path="/foods"
+        render={ () => <Header name="Foods" isSearched /> }
+      />
+      <Route
+        path="/drinks"
+        render={ () => <Header name="Drinks" isSearched /> }
+      />
+      <Route
+        exact
+        path="/explore"
+        render={ () => <Header name="Explore" isSearched={ false } /> }
+      />
+      <Route
+        exact
+        path="/explore/foods"
+        render={ () => <Header name="Explore Foods" isSearched={ false } /> }
+      />
+      <Route
+        exact
+        path="/explore/drinks"
+        render={ () => <Header name="Explore Drinks" isSearched={ false } /> }
+      />
+      <Route
+        path="/explore/foods/ingredients"
+        render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
+      />
+      <Route
+        path="/explore/drinks/ingredients"
+        render={ () => <Header name="Explore Ingredients" isSearched={ false } /> }
+      />
+      <Route
+        path="/explore/foods/nationalities"
+        render={ () => <Header name="Explore Nationalities" isSearched /> }
+      />
+      <Route
+        path="/profile"
+        render={ () => <Header name="Profile" isSearched={ false } /> }
+      />
+      <Route
+        path="/done-recipes"
+        render={ () => <Header name="Done Recipes" /> }
+      />
+      <Route
+        path="/favorite-recipes"
+        render={ () => <Header name="Favorite Recipes" /> }
+      />
     </Switch>
   );
 }
