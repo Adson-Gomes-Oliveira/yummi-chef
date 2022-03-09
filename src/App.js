@@ -72,20 +72,20 @@ function App() {
       />
       <Route
         path="/explore/foods/ingredients"
-        render={ () => (
+        render={ (props) => (
           <>
             <Header name="Explore Ingredients" isSearched={ false } />
-            <ExploreFoodsIngredients />
+            <ExploreFoodsIngredients { ...props } />
             <BottomMenu />
           </>) }
       />
       <Route
         path="/explore/drinks/ingredients"
-        render={ () => (
+        render={ (props) => (
           <>
             <Header name="Explore Ingredients" isSearched={ false } alt />
             <BottomMenu />
-            <ExploreDrinksIngredients />
+            <ExploreDrinksIngredients { ...props } />
           </>) }
       />
       <Route
