@@ -10,6 +10,7 @@ import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import BottomMenu from './components/BottomMenu';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -101,6 +102,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Profile" isSearched={ false } />
+            <Profile />
             <BottomMenu />
           </>
         ) }
