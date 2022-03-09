@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 
 // adicionar posteriormente ao arquivo de constantes e importar aqui:
@@ -15,13 +15,13 @@ function Login() {
     return re.test(email);
   };
 
-  const buttonValidation = () => {
+  const buttonValidation = useCallback(() => {
     if (statePassword.length > MIN_VALUE && emailValidation(stateEmail)) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  };
+  }, [stateEmail, statePassword]);
 
   function handleChange({ target }, setState) {
     setState(target.value);
@@ -29,7 +29,7 @@ function Login() {
 
   useEffect(() => {
     buttonValidation();
-  }, [stateEmail, statePassword]);
+  }, [buttonValidation, stateEmail, statePassword]);
 
   function clickButton() {
     localStorage.setItem('mealsToken', 1);
