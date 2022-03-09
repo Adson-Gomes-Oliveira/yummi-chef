@@ -7,9 +7,29 @@ function RecipesProvider({ children }) {
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
   };
+  const closeSearch = () => {
+    setOpened(() => ({ isOpened: false }));
+  };
 
+  const [filtredFoods, setFiltredFoods] = useState([]);
+  function updateFiltredFoods(res) {
+    setFiltredFoods(res);
+  }
+  const [filtredDrinks, setFiltredDrinks] = useState([]);
+  function updateFiltredDrinks(res) {
+    setFiltredDrinks(res);
+  }
   return (
-    <recipesContext.Provider value={ { isOpenedSearch, openOrCloseSearchInput } }>
+    <recipesContext.Provider
+      value={ {
+        isOpenedSearch,
+        openOrCloseSearchInput,
+        updateFiltredFoods,
+        filtredFoods,
+        filtredDrinks,
+        updateFiltredDrinks,
+        closeSearch } }
+    >
       {children}
     </recipesContext.Provider>
   );

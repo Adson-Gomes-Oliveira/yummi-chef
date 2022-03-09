@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 import getFoodsAPI from '../services/getFoodsAPI';
 import getFoodsCategoriesAPI from '../services/getFoodsCategoriesAPI';
 import getFoodsByCategoryAPI from '../services/getFoodsByCategoryAPI';
+import recipesContext from '../context/recipesContext';
 
 function Foods() {
-  const [foods, setFoods] = useState([]);
+  const { filtredFoods } = useContext(recipesContext);
+  const [foods, setFoods] = useState(filtredFoods);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -16,7 +18,9 @@ function Foods() {
   };
 
   useEffect(() => {
-    fetchFoods();
+    if (!filtredFoods.length) {
+      fetchFoods();
+    }
 
     const fetchCategories = async () => {
       const res = await getFoodsCategoriesAPI();
