@@ -8,6 +8,7 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreFoodsIngredients from './pages/ExploreFoodsIngredients';
 import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import BottomMenu from './components/BottomMenu';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -97,6 +98,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Profile" isSearched={ false } />
+            <Profile />
             <BottomMenu />
           </>
         ) }
