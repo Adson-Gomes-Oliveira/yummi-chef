@@ -7,6 +7,9 @@ function RecipesProvider({ children }) {
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
   };
+  const closeSearch = () => {
+    setOpened(() => ({ isOpened: false }));
+  };
 
   const [filtredFoods, setFiltredFoods] = useState([]);
   function updateFiltredFoods(res) {
@@ -24,7 +27,8 @@ function RecipesProvider({ children }) {
         updateFiltredFoods,
         filtredFoods,
         filtredDrinks,
-        updateFiltredDrinks } }
+        updateFiltredDrinks,
+        closeSearch } }
     >
       {children}
     </recipesContext.Provider>

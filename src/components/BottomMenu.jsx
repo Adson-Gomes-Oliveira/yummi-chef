@@ -7,10 +7,12 @@ import './styles/BottomMenu.css';
 import recipesContext from '../context/recipesContext';
 
 function BottomMenu() {
-  const { updateFiltredFoods, updateFiltredDrinks } = useContext(recipesContext);
+  const { updateFiltredFoods,
+    updateFiltredDrinks, closeSearch } = useContext(recipesContext);
   const handleClick = () => {
     updateFiltredFoods([]);
     updateFiltredDrinks([]);
+    closeSearch(); // switch openOrCloseSearchInput to false
   };
   return (
     <section className="footer" data-testid="footer">
