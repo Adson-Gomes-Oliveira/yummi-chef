@@ -8,6 +8,8 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreFoodsIngredients from './pages/ExploreFoodsIngredients';
 import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import BottomMenu from './components/BottomMenu';
+import Foods from './pages/Foods';
+import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Foods" isSearched />
+            <Foods />
             <BottomMenu />
           </>
         ) }
@@ -32,6 +35,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Drinks" isSearched />
+            <Drinks />
             <BottomMenu />
           </>
         ) }

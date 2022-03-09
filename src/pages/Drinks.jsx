@@ -1,0 +1,89 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import getDrinksAPI from '../services/getDrinksAPI';
+import getDrinksCategoriesAPI from '../services/getDrinksCategoriesAPI';
+import getDrinksByCategoryAPI from '../services/getDrinksByCategoryAPI';
+
+function Drinks() {
+  const [drinks, setDrinks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const fetchDrinks = async () => {
+    const res = await getDrinksAPI();
+    setDrinks(res);
+  };
+
+  useEffect(() => {
+    fetchDrinks();
+
+    const fetchDrinksCategories = async () => {
+      const res = await getDrinksCategoriesAPI();
+      console.log('res', res);
+      setCategories(res);
+    };
+    fetchDrinksCategories();
+  }, []);
+
+  const handleClickCategories = ({ target }) => {
+    if (selectedCategory === target.value) {
+      fetchDrinks();
+      setSelectedCategory('');
+    } else {
+      const fetchDrinksByCategory = async () => {
+        const res = await getDrinksByCategoryAPI(target.value);
+        setDrinks(res);
+      };
+      fetchDrinksByCategory();
+      setSelectedCategory(target.value);
+    }
+  };
+
+  if (drinks.length === 0) return <h3>Carrengando...</h3>;
+
+  return (
+    <>
+      <h1>Drinks</h1>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ fetchDrinks }
+      >
+        All
+      </button>
+      {
+        categories.map((categorie) => (
+          <button
+            type="button"
+            key={ categorie.strCategory }
+            data-testid={ `${categorie.strCategory}-category-filter` }
+            value={ categorie.strCategory }
+            onClick={ handleClickCategories }
+          >
+            { categorie.strCategory }
+          </button>
+        ))
+      }
+      {
+        drinks.map((drink, index) => (
+          <div
+            key={ drink.idDrink }
+            data-testid={ `${index}-recipe-card` }
+          >
+            <Link to={ `/drinks/${drink.idDrink}` }>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+              />
+              <h5 data-testid={ `${index}-card-name` }>{ drink.strDrink }</h5>
+            </Link>
+          </div>
+        ))
+      }
+    </>
+  );
+}
+
+export default Drinks;
