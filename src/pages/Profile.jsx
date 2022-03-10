@@ -4,11 +4,15 @@ import { useHistory } from 'react-router-dom';
 
 function Profile() {
   const history = useHistory();
-  const [emailInStorage, setEmailInStorage] = useState('');
+  const [emailInStorage, setEmailInStorage] = useState({
+    email: 'Não tem email',
+  });
 
   const recoverUserEmail = () => {
     const userEmail = JSON.parse(localStorage.getItem('user'));
-    setEmailInStorage(userEmail);
+    if (userEmail !== null) {
+      setEmailInStorage(userEmail);
+    }
   };
 
   const handleLogoutClick = () => {
