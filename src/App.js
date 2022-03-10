@@ -11,6 +11,7 @@ import BottomMenu from './components/BottomMenu';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
+import ExploreNationalities from './pages/ExploreNationalities';
 
 function App() {
   return (
@@ -93,6 +94,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Explore Nationalities" isSearched />
+            <ExploreNationalities />
             <BottomMenu />
           </>
         ) }
@@ -123,6 +125,12 @@ function App() {
             <Header name="Favorite Recipes" isSearched={ false } />
             {/* <BottomMenu /> */}
           </>
+        ) }
+      />
+      <Route
+        path="*"
+        render={ () => (
+          <h1>Not Found</h1>
         ) }
       />
     </Switch>
