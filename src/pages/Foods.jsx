@@ -7,7 +7,7 @@ import getFoodsByCategoryAPI from '../services/getFoodsByCategoryAPI';
 import recipesContext from '../context/recipesContext';
 
 function Foods() {
-  const { filtredFoods } = useContext(recipesContext);
+  const { filtredFoods, searchFoods } = useContext(recipesContext);
   const [foods, setFoods] = useState(filtredFoods);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -18,8 +18,11 @@ function Foods() {
   };
 
   useEffect(() => {
-    if (!filtredFoods.length) {
+    if (filtredFoods.length === 0 && searchFoods.length === 0) {
       fetchFoods();
+    }
+    if (searchFoods.length > 0) {
+      setFoods(searchFoods);
     }
 
     const fetchCategories = async () => {
@@ -27,7 +30,7 @@ function Foods() {
       setCategories(res);
     };
     fetchCategories();
-  }, []);
+  }, [searchFoods]);
 
   const handleClickCategories = ({ target }) => {
     if (selectedCategory === target.value) {
