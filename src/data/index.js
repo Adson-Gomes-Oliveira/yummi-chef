@@ -14,3 +14,5 @@ export const DRINKS_BY_CATEGORY_API = 'https://www.thecocktaildb.com/api/json/v1
 
 export const FOODS_BY_INGREDIENT_API = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
 export const DRINKS_BY_INGREDIENT_API = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=';
+
+export const FIRST_LETTER = 'First letter';

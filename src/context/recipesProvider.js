@@ -4,6 +4,7 @@ import recipesContext from './recipesContext';
 
 function RecipesProvider({ children }) {
   const [isOpenedSearch, setOpened] = useState({ isOpened: false });
+  const [searchFoods, setSearchFoods] = useState([]);
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
   };
@@ -19,9 +20,14 @@ function RecipesProvider({ children }) {
   function updateFiltredDrinks(res) {
     setFiltredDrinks(res);
   }
+  function updateSearchFoods(res) {
+    setSearchFoods(res);
+  }
   return (
     <recipesContext.Provider
       value={ {
+        updateSearchFoods,
+        searchFoods,
         isOpenedSearch,
         openOrCloseSearchInput,
         updateFiltredFoods,
