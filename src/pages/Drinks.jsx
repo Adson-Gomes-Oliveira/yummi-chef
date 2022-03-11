@@ -5,6 +5,8 @@ import getDrinksAPI from '../services/getDrinksAPI';
 import getDrinksCategoriesAPI from '../services/getDrinksCategoriesAPI';
 import getDrinksByCategoryAPI from '../services/getDrinksByCategoryAPI';
 
+const MAX_RENDER_DRINKS = 6;
+
 function Drinks() {
   const [drinks, setDrinks] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -12,7 +14,7 @@ function Drinks() {
 
   const fetchDrinks = async () => {
     const res = await getDrinksAPI();
-    setDrinks(res);
+    setDrinks(res.slice(0, MAX_RENDER_DRINKS));
   };
 
   useEffect(() => {
