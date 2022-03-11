@@ -7,9 +7,9 @@
 }
 
 .recomendationsContainer span {
+  background-color: blueviolet;
   height: 100px;
   margin-right: 95px;
-  background-color: blueviolet;
   width: 100px;
 }
 
