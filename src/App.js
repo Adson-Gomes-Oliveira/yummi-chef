@@ -13,6 +13,7 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import FoodRecipe from './pages/FoodRecipe/index';
 import DrinkRecipe from './pages/DrinkRecipe';
+import ExploreNationalities from './pages/ExploreNationalities';
 
 function App() {
   return (
@@ -80,20 +81,20 @@ function App() {
       />
       <Route
         path="/explore/foods/ingredients"
-        render={ () => (
+        render={ (props) => (
           <>
             <Header name="Explore Ingredients" isSearched={ false } />
-            <ExploreFoodsIngredients />
+            <ExploreFoodsIngredients { ...props } />
             <BottomMenu />
           </>) }
       />
       <Route
         path="/explore/drinks/ingredients"
-        render={ () => (
+        render={ (props) => (
           <>
             <Header name="Explore Ingredients" isSearched={ false } alt />
             <BottomMenu />
-            <ExploreDrinksIngredients />
+            <ExploreDrinksIngredients { ...props } />
           </>) }
       />
       <Route
@@ -101,6 +102,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Explore Nationalities" isSearched />
+            <ExploreNationalities />
             <BottomMenu />
           </>
         ) }
@@ -131,6 +133,12 @@ function App() {
             <Header name="Favorite Recipes" isSearched={ false } />
             {/* <BottomMenu /> */}
           </>
+        ) }
+      />
+      <Route
+        path="*"
+        render={ () => (
+          <h1>Not Found</h1>
         ) }
       />
     </Switch>

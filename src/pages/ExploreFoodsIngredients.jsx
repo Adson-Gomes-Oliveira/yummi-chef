@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import getIngredients from '../services/getIngredientsAPI';
 import IngredientCard from '../components/ingredientCard';
 import { MAX_RENDER_INGREDIENTS } from '../data';
 
-export default function ExploreFoodsIngredients() {
+export default function ExploreFoodsIngredients({ history }) {
   const [ingredients, setIngredients] = useState();
   useEffect(() => {
     if (typeof ingredients === 'undefined') {
@@ -23,6 +24,7 @@ export default function ExploreFoodsIngredients() {
               key={ i }
               name={ ingredientInfo.strIngredient }
               index={ i }
+              history={ history }
             />);
           }
           return null;
@@ -31,3 +33,9 @@ export default function ExploreFoodsIngredients() {
     </div>
   );
 }
+
+ExploreFoodsIngredients.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

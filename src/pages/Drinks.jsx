@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import getDrinksAPI from '../services/getDrinksAPI';
 import getDrinksCategoriesAPI from '../services/getDrinksCategoriesAPI';
 import getDrinksByCategoryAPI from '../services/getDrinksByCategoryAPI';
+import recipesContext from '../context/recipesContext';
 
 const MAX_RENDER_DRINKS = 6;
 
 function Drinks() {
-  const [drinks, setDrinks] = useState([]);
+  const { filtredDrinks } = useContext(recipesContext);
+  const [drinks, setDrinks] = useState(filtredDrinks);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -18,11 +20,12 @@ function Drinks() {
   };
 
   useEffect(() => {
-    fetchDrinks();
+    if (!filtredDrinks.length) {
+      fetchDrinks();
+    }
 
     const fetchDrinksCategories = async () => {
       const res = await getDrinksCategoriesAPI();
-      console.log('res', res);
       setCategories(res);
     };
     fetchDrinksCategories();
