@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import ReactPlayer from 'react-player';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 import './styles/Recipes.css';
@@ -15,6 +14,7 @@ function FoodRecipe() {
 
   useEffect(() => {
     const fethFoodDetails = async () => {
+      console.log(id);
       const res = await getFoodRecipeAPI(id);
       setRecipe(res);
     };
@@ -88,14 +88,16 @@ function FoodRecipe() {
       <p data-testid="instructions">
         { recipe.strInstructions }
       </p>
-
-      <ReactPlayer
+      <iframe
         data-testid="video"
-        url={ recipe.strYoutube }
-        controls
-        light
-        width="100%"
-        height="200px"
+        width="1288"
+        height="499"
+        src={ recipe.strYoutube }
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer;
+        clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
       />
       <div className="recomendationsContainer">
         {

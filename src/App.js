@@ -72,10 +72,10 @@ function App() {
       <Route
         exact
         path="/explore/drinks"
-        render={ () => (
+        render={ (props) => (
           <>
             <Header name="Explore Drinks" isSearched={ false } />
-            <ExploreDrinks />
+            <ExploreDrinks { ...props } />
             <BottomMenu />
           </>) }
       />
