@@ -8,17 +8,22 @@
 
 .recomendationsContainer span {
   height: 100px;
-  margin: 1rem;
+  margin-right: 95px;
+  background-color: blueviolet;
   width: 100px;
 }
 
+.recomendationsContainer span:first-of-type {
+  margin-left: 30px;
+}
+
 .recomendationsContainer img {
-  width: 100px;
+  width: 150px;
 }
 
 .startRecipeButton {
   bottom: 0;
   left: 50%;
-  position: relative;
+  position: fixed;
   transform: translateX(-50%);
 }

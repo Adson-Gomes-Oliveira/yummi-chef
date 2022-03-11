@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import getFoodsAPI from '../../services/getFoodsAPI';
-import getDrinkRecipeAPI from '../../services/getDrinkRecipeAPI';
-
-import './style.css';
+import getFoodsAPI from '../services/getFoodsAPI';
+import getDrinkRecipeAPI from '../services/getDrinkRecipeAPI';
+import './styles/Recipes.css';
 
 const MAX_RENDER_DRINKS = 6;
 

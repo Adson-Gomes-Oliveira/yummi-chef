@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ReactPlayer from 'react-player';
-import getDrinksAPI from '../../services/getDrinksAPI';
-import getFoodRecipeAPI from '../../services/getFoodRecipeAPI';
-
-import './style.css';
+import getDrinksAPI from '../services/getDrinksAPI';
+import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
+import './styles/Recipes.css';
 
 // const SLICE_VIDEO_ID = 11;
 const MAX_RENDER_DRINKS = 6;

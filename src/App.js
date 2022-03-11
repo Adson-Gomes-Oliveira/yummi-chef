@@ -11,7 +11,7 @@ import BottomMenu from './components/BottomMenu';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
-import FoodRecipe from './pages/FoodRecipe/index';
+import FoodRecipe from './pages/FoodRecipe';
 import DrinkRecipe from './pages/DrinkRecipe';
 import ExploreNationalities from './pages/ExploreNationalities';
 
@@ -21,7 +21,7 @@ function App() {
       <Route exact path="/" component={ Login } />
       <Route
         path="/foods/:id"
-        component={ FoodRecipe }
+        render={ () => <FoodRecipe /> }
       />
       <Route
         path="/drinks/:id"
