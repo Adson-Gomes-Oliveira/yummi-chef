@@ -11,14 +11,22 @@ import BottomMenu from './components/BottomMenu';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
+import FoodRecipe from './pages/FoodRecipe';
+import DrinkRecipe from './pages/DrinkRecipe';
 import ExploreNationalities from './pages/ExploreNationalities';
 
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/foods/:id" render={ () => <h1>Food detail</h1> } />
-      <Route path="/drinks/:id" render={ () => <h1>Drink detail</h1> } />
+      <Route
+        path="/foods/:id"
+        render={ () => <FoodRecipe /> }
+      />
+      <Route
+        path="/drinks/:id"
+        render={ () => <DrinkRecipe /> }
+      />
       <Route path="/foods/:id/in-progress" render={ () => <h1>Food progress</h1> } />
       <Route path="/drinks/:id/in-progress" render={ () => <h1>Drinks progress</h1> } />
       <Route

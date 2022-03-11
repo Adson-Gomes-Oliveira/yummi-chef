@@ -1,0 +1,29 @@
+.recomendationsContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 250px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.recomendationsContainer span {
+  background-color: blueviolet;
+  height: 100px;
+  margin-right: 95px;
+  width: 100px;
+}
+
+.recomendationsContainer span:first-of-type {
+  margin-left: 30px;
+}
+
+.recomendationsContainer img {
+  width: 150px;
+}
+
+.startRecipeButton {
+  bottom: 0;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
+}
