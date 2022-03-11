@@ -22,7 +22,7 @@
 .login form input {
   border: none;
   border-radius: var(--spacing-scale-1x);
-  height: 40px;
+  height: 2.5rem;
   margin: var(--spacing-scale-2x);
   margin-top: 0;
   width: 17.5rem;
@@ -42,7 +42,7 @@
   border-radius: var(--spacing-scale-1x);
   color: var(--base-color);
   font-family: bebas , sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-left: 2.5rem;
   padding: var(--spacing-scale-2x) var(--spacing-scale-4x);
 }
