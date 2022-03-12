@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
@@ -10,6 +10,7 @@ const MAX_RENDER_DRINKS = 6;
 
 function FoodRecipe() {
   const { id } = useParams();
+  const history = useHistory();
   const [recipe, setRecipe] = useState({});
   const [drinks, setDrinks] = useState([]);
 
@@ -26,6 +27,15 @@ function FoodRecipe() {
     };
     fetchDrinks();
   }, []);
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(history.location.pathname);
+    global.alert('Link copied!');
+  };
+
+  const handleClickToStartRecipe = () => {
+    history.push(`/foods/${id}/in-progress`);
+  };
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -61,6 +71,7 @@ function FoodRecipe() {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ handleShare }
       >
         Share
       </button>
@@ -122,6 +133,7 @@ function FoodRecipe() {
         type="button"
         data-testid="start-recipe-btn"
         className="startRecipeButton"
+        onClick={ handleClickToStartRecipe }
       >
         Start Recipe
       </button>
