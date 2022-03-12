@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
+import LogoLogin from '../images/logoSVGART.svg';
+import './styles/Login.css';
 
 // adicionar posteriormente ao arquivo de constantes e importar aqui:
 const MIN_VALUE = 6;
@@ -39,31 +41,34 @@ function Login() {
   }
 
   return (
-    <form>
-      <input
-        type="email"
-        value={ stateEmail }
-        onChange={ (event) => handleChange(event, setStateEmail) }
-        placeholder="Type your e-mail"
-        data-testid="email-input"
-      />
-      <input
-        type="password"
-        value={ statePassword }
-        onChange={ (event) => handleChange(event, setStatePassword) }
-        placeholder="Type your password"
-        data-testid="password-input"
-      />
-      <button
-        type="button"
-        disabled={ isDisabled }
-        onClick={ clickButton }
-        data-testid="login-submit-btn"
-      >
-        Enter
-      </button>
-      {isRedirect && <Redirect to="/foods" />}
-    </form>
+    <section className="login">
+      <img className="logo-login" src={ LogoLogin } alt="Logo Art Yummi Chef" />
+      <form>
+        <span>Email</span>
+        <input
+          type="email"
+          value={ stateEmail }
+          onChange={ (event) => handleChange(event, setStateEmail) }
+          data-testid="email-input"
+        />
+        <span>Password</span>
+        <input
+          type="password"
+          value={ statePassword }
+          onChange={ (event) => handleChange(event, setStatePassword) }
+          data-testid="password-input"
+        />
+        <button
+          type="button"
+          disabled={ isDisabled }
+          onClick={ clickButton }
+          data-testid="login-submit-btn"
+        >
+          Enter
+        </button>
+        {isRedirect && <Redirect to="/foods" />}
+      </form>
+    </section>
   );
 }
 
