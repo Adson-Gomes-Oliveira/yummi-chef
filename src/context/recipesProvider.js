@@ -5,6 +5,8 @@ import recipesContext from './recipesContext';
 function RecipesProvider({ children }) {
   const [isOpenedSearch, setOpened] = useState({ isOpened: false });
   const [searchFoods, setSearchFoods] = useState([]);
+  const [filtredFoods, setFiltredFoods] = useState([]);
+  const [filtredDrinks, setFiltredDrinks] = useState([]);
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
   };
@@ -12,14 +14,14 @@ function RecipesProvider({ children }) {
     setOpened(() => ({ isOpened: false }));
   };
 
-  const [filtredFoods, setFiltredFoods] = useState([]);
   function updateFiltredFoods(res) {
     setFiltredFoods(res);
   }
-  const [filtredDrinks, setFiltredDrinks] = useState([]);
+
   function updateFiltredDrinks(res) {
     setFiltredDrinks(res);
   }
+
   function updateSearchFoods(res) {
     setSearchFoods(res);
   }

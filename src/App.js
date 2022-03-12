@@ -14,20 +14,23 @@ import Profile from './pages/Profile';
 import FoodRecipe from './pages/FoodRecipe';
 import DrinkRecipe from './pages/DrinkRecipe';
 import ExploreNationalities from './pages/ExploreNationalities';
+import FoodProgress from './pages/FoodProgress';
 
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
       <Route
+        exact
         path="/foods/:id"
         render={ () => <FoodRecipe /> }
       />
       <Route
+        exact
         path="/drinks/:id"
         render={ () => <DrinkRecipe /> }
       />
-      <Route path="/foods/:id/in-progress" render={ () => <h1>Food progress</h1> } />
+      <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
       <Route path="/drinks/:id/in-progress" render={ () => <h1>Drinks progress</h1> } />
       <Route
         path="/foods"
