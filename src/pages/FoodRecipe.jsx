@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import recipesContext from '../context/recipesContext';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
+import ButtonShare from '../components/ButtonShare';
+import ButtonFavorite from '../components/ButtonFavorite';
 import './styles/Recipes.css';
 
 // const SLICE_VIDEO_ID = 11;
@@ -9,13 +12,32 @@ const MAX_RENDER_DRINKS = 6;
 
 function FoodRecipe() {
   const { id } = useParams();
+  const { updateRecipesInProgressFood } = useContext(recipesContext);
   const history = useHistory();
   const [recipe, setRecipe] = useState({});
   const [drinks, setDrinks] = useState([]);
 
+  // ----------------------------------------------------------------------------
+  // This block verify if exist recipes in progress in the LocalStorage
+  const recoverFromStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const conditionalObject = recoverFromStorage === null ? {
+    cocktails: {},
+    meals: {},
+  } : recoverFromStorage.meals;
+  const recipesInProgress = Object.keys(conditionalObject);
+  // End of the block thats verify if exist recipes in progress in the LocalStorage
+
+  // This block verify if exist favorite recipes in the LocalStorage
+  const recoverFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const favoriteRecipes = [];
+  if (recoverFavorite !== null) {
+    recoverFavorite.forEach((recipeId) => favoriteRecipes.push(recipeId.id));
+  }
+  // End of the block thats verify if exist favorite recipes in the LocalStorage
+  // ----------------------------------------------------------------------------
+
   useEffect(() => {
     const fethFoodDetails = async () => {
-      console.log(id);
       const res = await getFoodRecipeAPI(id);
       setRecipe(res);
     };
@@ -28,15 +50,6 @@ function FoodRecipe() {
     fetchDrinks();
   }, []);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(history.location.pathname);
-    global.alert('Link copied!');
-  };
-
-  const handleClickToStartRecipe = () => {
-    history.push(`/foods/${id}/in-progress`);
-  };
-
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
       if (ingredient[0].includes('strIngredient') && ingredient[1]) {
@@ -44,6 +57,11 @@ function FoodRecipe() {
       }
       return acc;
     }, []);
+
+  const handleClickToStartRecipe = () => {
+    updateRecipesInProgressFood(id, ingredients);
+    history.push(`/foods/${id}/in-progress`);
+  };
 
   const measures = Object.entries(recipe)
     .reduce((acc, measure) => {
@@ -53,10 +71,8 @@ function FoodRecipe() {
       return acc;
     }, []);
 
-  if (recipe.length === 0 || drinks.length === 0) return <h1>Carregando...</h1>;
-
   return (
-    <section>
+    <section className="recipes">
       <img
         data-testid="recipe-photo"
         src={ recipe.strMealThumb }
@@ -68,19 +84,10 @@ function FoodRecipe() {
       >
         {recipe.strMeal}
       </h3>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ handleShare }
-      >
-        Share
-      </button>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favorite
-      </button>
+
+      <ButtonShare />
+      <ButtonFavorite recipe={ recipe } type="food" />
+
       <p
         data-testid="recipe-category"
       >
@@ -101,8 +108,8 @@ function FoodRecipe() {
       </p>
       <iframe
         data-testid="video"
-        width="1288"
-        height="499"
+        width="360"
+        height="200"
         src={ recipe.strYoutube }
         title="YouTube video player"
         frameBorder="0"
@@ -121,11 +128,11 @@ function FoodRecipe() {
                 src={ drink.strDrinkThumb }
                 alt={ drink.strDrink }
               />
-              <h5
+              <span
                 data-testid={ `${index}-recomendation-title` }
               >
                 { drink.strDrink }
-              </h5>
+              </span>
             </span>
           ))
         }
@@ -137,7 +144,8 @@ function FoodRecipe() {
         className="startRecipeButton"
         onClick={ handleClickToStartRecipe }
       >
-        Start Recipe
+        {recipesInProgress.includes(id)
+          ? <span>Continue Recipe</span> : <span>Start Recipe</span>}
       </button>
     </section>
   );

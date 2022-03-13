@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import ButtonFavorite from '../components/ButtonFavorite';
+import ButtonShare from '../components/ButtonShare';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 
 function FoodProgress() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
-  const history = useHistory();
 
   useEffect(() => {
     const fetchFoodDetails = async () => {
@@ -14,11 +15,6 @@ function FoodProgress() {
     };
     fetchFoodDetails();
   }, [id]);
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(history.location.pathname);
-    global.alert('Link copied!');
-  };
 
   const handleCheckIngredient = () => {
 
@@ -51,19 +47,10 @@ function FoodProgress() {
 
       <h3 data-testid="recipe-title">{recipe.strMeal}</h3>
       <span data-testid="recipe-category">{ recipe.strCategory }</span>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ handleShare }
-      >
-        Share
-      </button>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favorite
-      </button>
+
+      <ButtonShare />
+      <ButtonFavorite recipe={ recipe } type="food" />
+
       {ingredients.map((ingredient, index) => (
         <label
           key={ ingredient }
