@@ -70,7 +70,7 @@ function FoodRecipe() {
     };
     if (buttonState === true) {
       setBtnState(false);
-      return null;
+      return updateFavoriteRecipes(recipeFavorite);
     }
 
     setBtnState(true);

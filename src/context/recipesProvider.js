@@ -72,6 +72,14 @@ function RecipesProvider({ children }) {
       { id, type, nationality, category, alcoholicOrNot, name, image },
     ];
 
+    if (recoverFromStorage !== null) {
+      const isFavorite = recoverFromStorage.some((recipeF) => recipeF.id === id);
+      if (isFavorite) {
+        const newArray = recoverFromStorage.filter((recipeF) => recipeF.id !== id);
+        return localStorage.setItem('favoriteRecipes', JSON.stringify(newArray));
+      }
+    }
+
     localStorage.setItem('favoriteRecipes', JSON.stringify(conditionalObject));
   }
 
