@@ -11,7 +11,7 @@ function FoodProgress() {
   const { updateRecipesInProgressFood } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
-  const [disableButton, setDisable] = useState(true);
+  const [disableButton] = useState(true);
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -45,15 +45,6 @@ function FoodProgress() {
     };
     fetchFoodDetails();
   }, [id]);
-
-  useEffect(() => {
-    setDisable(true);
-    console.log(ingredients.length);
-    if (!Object.values(checkedIngredients).includes(false)
-    && !Object.keys(checkedIngredients).length > ingredients.length) {
-      setDisable(false);
-    }
-  }, [checkedIngredients]);
 
   const handleCheckIngredient = ({ target }) => {
     const { checked, id: name } = target;
