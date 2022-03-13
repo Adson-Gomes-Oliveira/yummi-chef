@@ -35,7 +35,7 @@
   width: 130px;
 }
 
-.startRecipeButton {
+.recipeButton {
   background-color: var(--button-alternative-color);
   border: none;
   bottom: 0;
@@ -46,4 +46,12 @@
   position: fixed;
   width: 100%;
   z-index: 2;
+}
+
+.finish {
+  background-color: var(--base-color);
+}
+
+.finish:disabled {
+  background-color: var(--body-color);
 }

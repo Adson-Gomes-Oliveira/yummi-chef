@@ -7,7 +7,8 @@ function ButtonShare() {
   const [alert, setAlert] = useState(false);
 
   const handleShare = () => {
-    navigator.clipboard.writeText(`http://localhost:3000${history.location.pathname}`);
+    const recipeRoute = history.location.pathname.replace('/in-progress', '');
+    navigator.clipboard.writeText(`http://localhost:3000${recipeRoute}`);
     setAlert(true);
   };
 

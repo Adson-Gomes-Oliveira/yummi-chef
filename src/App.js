@@ -15,6 +15,7 @@ import FoodRecipe from './pages/FoodRecipe';
 import DrinkRecipe from './pages/DrinkRecipe';
 import ExploreNationalities from './pages/ExploreNationalities';
 import FoodProgress from './pages/FoodProgress';
+import DrinkProgress from './pages/DrinkProgress';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
         render={ () => <DrinkRecipe /> }
       />
       <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
-      <Route path="/drinks/:id/in-progress" render={ () => <h1>Drinks progress</h1> } />
+      <Route path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
       <Route
         path="/foods"
         render={ () => (
