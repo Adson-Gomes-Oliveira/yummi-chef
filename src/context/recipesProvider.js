@@ -25,6 +25,56 @@ function RecipesProvider({ children }) {
   function updateSearchFoods(res) {
     setSearchFoods(res);
   }
+
+  function updateRecipesInProgressFood(id, ingredients) {
+    const recoverFromStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const conditionalObject = recoverFromStorage === null ? {
+      cocktails: {},
+      meals: {
+        [id]: ingredients,
+      },
+    } : {
+      ...recoverFromStorage,
+      meals: {
+        ...recoverFromStorage.meals,
+        [id]: ingredients,
+      },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(conditionalObject));
+  }
+
+  function updateRecipesInProgressDrinks(id, ingredients) {
+    const recoverFromStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const conditionalObject = recoverFromStorage === null ? {
+      cocktails: {
+        [id]: ingredients,
+      },
+      meals: {},
+    } : {
+      ...recoverFromStorage,
+      cocktails: {
+        ...recoverFromStorage.cocktails,
+        [id]: ingredients,
+      },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(conditionalObject));
+  }
+
+  function updateFavoriteRecipes(recipe) {
+    const { id, type, nationality, category, alcoholicOrNot, name, image } = recipe;
+    const recoverFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const conditionalObject = recoverFromStorage === null ? [
+      { id, type, nationality, category, alcoholicOrNot, name, image },
+    ] : [
+      ...recoverFromStorage,
+      { id, type, nationality, category, alcoholicOrNot, name, image },
+    ];
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(conditionalObject));
+  }
+
   return (
     <recipesContext.Provider
       value={ {
@@ -36,7 +86,10 @@ function RecipesProvider({ children }) {
         filtredFoods,
         filtredDrinks,
         updateFiltredDrinks,
-        closeSearch } }
+        closeSearch,
+        updateRecipesInProgressFood,
+        updateRecipesInProgressDrinks,
+        updateFavoriteRecipes } }
     >
       {children}
     </recipesContext.Provider>
