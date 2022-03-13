@@ -31,13 +31,19 @@ function RecipesProvider({ children }) {
     const conditionalObject = recoverFromStorage === null ? {
       cocktails: {},
       meals: {
-        [id]: ingredients,
+        [id]: {
+          ingredients,
+          checkedIngredients: {},
+        },
       },
     } : {
       ...recoverFromStorage,
       meals: {
         ...recoverFromStorage.meals,
-        [id]: ingredients,
+        [id]: {
+          ingredients,
+          checkedIngredients: {},
+        },
       },
     };
 
@@ -46,16 +52,23 @@ function RecipesProvider({ children }) {
 
   function updateRecipesInProgressDrinks(id, ingredients) {
     const recoverFromStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    console.log(ingredients);
     const conditionalObject = recoverFromStorage === null ? {
       cocktails: {
-        [id]: ingredients,
+        [id]: {
+          ingredients,
+          checkedIngredients: {},
+        },
       },
       meals: {},
     } : {
       ...recoverFromStorage,
       cocktails: {
         ...recoverFromStorage.cocktails,
-        [id]: ingredients,
+        [id]: {
+          ingredients,
+          checkedIngredients: {},
+        },
       },
     };
 

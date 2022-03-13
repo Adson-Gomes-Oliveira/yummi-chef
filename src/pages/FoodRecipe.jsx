@@ -58,6 +58,10 @@ function FoodRecipe() {
       return acc;
     }, []);
 
+  const handleClickToContinue = () => {
+    history.push(`/foods/${id}/in-progress`);
+  };
+
   const handleClickToStartRecipe = () => {
     updateRecipesInProgressFood(id, ingredients);
     history.push(`/foods/${id}/in-progress`);
@@ -138,15 +142,25 @@ function FoodRecipe() {
         }
       </div>
 
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="startRecipeButton"
-        onClick={ handleClickToStartRecipe }
-      >
-        {recipesInProgress.includes(id)
-          ? <span>Continue Recipe</span> : <span>Start Recipe</span>}
-      </button>
+      {recipesInProgress.includes(id) ? (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipeButton"
+          onClick={ handleClickToContinue }
+        >
+          <span>Continue Recipe</span>
+        </button>
+      ) : (
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipeButton"
+          onClick={ handleClickToStartRecipe }
+        >
+          <span>Start Recipe</span>
+        </button>
+      )}
     </section>
   );
 }

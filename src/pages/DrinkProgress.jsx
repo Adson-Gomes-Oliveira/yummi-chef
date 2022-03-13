@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import ButtonFavorite from '../components/ButtonFavorite';
 import recipesContext from '../context/recipesContext';
+import ButtonFavorite from '../components/ButtonFavorite';
 import ButtonShare from '../components/ButtonShare';
-import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
+import getDrinkRecipeAPI from '../services/getDrinkRecipeAPI';
 import './styles/Progress.css';
 
-function FoodProgress() {
+function DrinkProgress() {
   const { id } = useParams();
-  const { updateRecipesInProgressFood } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
-  const [disableButton] = useState(true);
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -22,45 +21,43 @@ function FoodProgress() {
     }, []);
 
   useEffect(() => {
-  }, []);
-
-  useEffect(() => {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipesInProgress === null) {
-      updateRecipesInProgressFood(id, ingredients);
+      console.log(ingredients);
+      updateRecipesInProgressDrinks(id, ingredients);
       const recipeStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const recipeCooking = recipeStorage.meals[id];
+      const recipeCooking = recipeStorage.cocktails[id];
       const isChecked = recipeCooking.checkedIngredients;
       return setChecked(isChecked);
     }
-    const recipeCooking = recipesInProgress.meals[id];
+    const recipeCooking = recipesInProgress.cocktails[id];
     const isChecked = recipeCooking.checkedIngredients;
     setChecked(isChecked);
   }, []);
 
   useEffect(() => {
-    const fetchFoodDetails = async () => {
-      const res = await getFoodRecipeAPI(id);
+    const fetchDrinkDetails = async () => {
+      const res = await getDrinkRecipeAPI(id);
       setRecipe(res);
     };
-    fetchFoodDetails();
+    fetchDrinkDetails();
   }, [id]);
 
   const handleCheckIngredient = ({ target }) => {
     const { checked, id: name } = target;
     console.log(name, checked);
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const getRecipe = recipesInProgress.meals[id].checkedIngredients;
+    const getRecipe = recipesInProgress.cocktails[id].checkedIngredients;
     setChecked({
       ...checkedIngredients,
       [name]: checked,
     });
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...recipesInProgress,
-      meals: {
-        ...recipesInProgress.meals,
+      cocktails: {
+        ...recipesInProgress.cocktails,
         [id]: {
-          ...recipesInProgress.meals[id],
+          ...recipesInProgress.cocktails[id],
           checkedIngredients: {
             ...getRecipe,
             [name]: checked,
@@ -82,16 +79,16 @@ function FoodProgress() {
     <section className="food-progress">
       <img
         data-testid="recipe-photo"
-        src={ recipe.strMealThumb }
-        alt={ recipe.strMeal }
+        src={ recipe.strDrinkThumb }
+        alt={ recipe.strDrink }
         width="100%"
       />
 
-      <h3 data-testid="recipe-title">{recipe.strMeal}</h3>
+      <h3 data-testid="recipe-title">{recipe.strDrink}</h3>
       <span data-testid="recipe-category">{ recipe.strCategory }</span>
 
       <ButtonShare />
-      <ButtonFavorite recipe={ recipe } type="food" />
+      <ButtonFavorite recipe={ recipe } type="drink" />
 
       {ingredients.map((ingredient, index) => (
         <label
@@ -109,14 +106,12 @@ function FoodProgress() {
           <span>{ `${ingredient} - ${measures[index]}` }</span>
         </label>
       ))}
-
       <p data-testid="instructions">{ recipe.strInstructions }</p>
       <button
         type="button"
         data-testid="finish-recipe-btn"
         className="recipeButton finish"
         // onClick={ handleClickToStopRecipe }
-        disabled={ disableButton }
       >
         <span>Finish Recipe</span>
       </button>
@@ -124,4 +119,4 @@ function FoodProgress() {
   );
 }
 
-export default FoodProgress;
+export default DrinkProgress;
