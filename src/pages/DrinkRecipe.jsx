@@ -2,23 +2,19 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import recipesContext from '../context/recipesContext';
 import getFoodsAPI from '../services/getFoodsAPI';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 import getDrinkRecipeAPI from '../services/getDrinkRecipeAPI';
 import './styles/Recipes.css';
+import ButtonShare from '../components/ButtonShare';
+import ButtonFavorite from '../components/ButtonFavorite';
 
 const MAX_RENDER_DRINKS = 6;
 
 function DrinkRecipe() {
   const history = useHistory();
-  const { updateRecipesInProgressDrinks,
-    updateFavoriteRecipes } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks } = useContext(recipesContext);
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [foods, setFoods] = useState([]);
-  const [alert, setAlert] = useState(false);
-  const [buttonState, setBtnState] = useState(false);
 
   // ----------------------------------------------------------------------------
   // This block verify if exist recipes in progress in the LocalStorage
@@ -51,36 +47,7 @@ function DrinkRecipe() {
       setFoods(res.slice(0, MAX_RENDER_DRINKS));
     };
     fetchFoods();
-
-    if (favoriteRecipes.includes(id)) {
-      setBtnState(true);
-    }
   }, []);
-
-  const handleFavorite = () => {
-    console.log(recipe);
-    const recipeFavorite = {
-      id: recipe.idDrink,
-      type: 'drink',
-      nationality: '',
-      category: recipe.strCategory,
-      alcoholicOrNot: recipe.strAlcoholic,
-      name: recipe.strDrink,
-      image: recipe.strDrinkThumb,
-    };
-    if (buttonState === true) {
-      setBtnState(false);
-      return null;
-    }
-
-    setBtnState(true);
-    updateFavoriteRecipes(recipeFavorite);
-  };
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(`http://localhost:3000${history.location.pathname}`);
-    setAlert(true);
-  };
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -116,46 +83,10 @@ function DrinkRecipe() {
       >
         {recipe.strDrink}
       </h3>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ handleShare }
-      >
-        <img src={ shareIcon } alt="Share icon" />
-      </button>
-      {alert && (
-        <div className="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>
-            Link copied!
-          </strong>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            onClick={ () => setAlert(false) }
-          />
-        </div>
-      )}
-      {buttonState ? (
-        <button
-          type="button"
-          data-testid="favorite-btn"
-          onClick={ handleFavorite }
-          src={ blackHeartIcon }
-        >
-          <img src={ blackHeartIcon } alt="Favorite" />
-        </button>
-      ) : (
-        <button
-          type="button"
-          data-testid="favorite-btn"
-          onClick={ handleFavorite }
-          src={ whiteHeartIcon }
-        >
-          <img src={ whiteHeartIcon } alt="Favorite" />
-        </button>
-      )}
+
+      <ButtonShare />
+      <ButtonFavorite recipe={ recipe } type="drink" />
+
       <p
         data-testid="recipe-category"
       >
