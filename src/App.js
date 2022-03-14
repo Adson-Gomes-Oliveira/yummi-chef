@@ -16,6 +16,7 @@ import DrinkRecipe from './pages/DrinkRecipe';
 import ExploreNationalities from './pages/ExploreNationalities';
 import FoodProgress from './pages/FoodProgress';
 import DrinkProgress from './pages/DrinkProgress';
+import DoneRecipes from './pages/DoneRecipes';
 
 function App() {
   return (
@@ -126,6 +127,7 @@ function App() {
         render={ () => (
           <>
             <Header name="Done Recipes" isSearched={ false } />
+            <DoneRecipes />
             {/* <BottomMenu /> */}
           </>
         ) }

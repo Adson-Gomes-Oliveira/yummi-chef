@@ -49,7 +49,6 @@ function FoodProgress() {
 
   const handleCheckIngredient = ({ target }) => {
     const { checked, id: name } = target;
-    console.log(name, checked);
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getRecipe = recipesInProgress.meals[id].checkedIngredients;
     setChecked({
@@ -83,6 +82,8 @@ function FoodProgress() {
     const recover = JSON.parse(localStorage.getItem('doneRecipes'));
     const { strArea: nationality, strCategory: category,
       strMeal: name, strMealThumb: image, strTags: tags } = recipe;
+    let tag = tags;
+    tag = tags.split(',');
     if (recover !== null) {
       localStorage.setItem('doneRecipes', JSON.stringify([
         ...recover,
@@ -95,7 +96,7 @@ function FoodProgress() {
           name,
           image,
           doneDate: wholeDate,
-          tags,
+          tags: [...tag],
         },
       ]));
       return history.push('/done-recipes');
@@ -110,7 +111,7 @@ function FoodProgress() {
         name,
         image,
         doneDate: wholeDate,
-        tags,
+        tags: [...tag],
       },
     ]));
     history.push('/done-recipes');
