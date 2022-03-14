@@ -7,7 +7,7 @@ import getDrinksByCategoryAPI from '../services/getDrinksByCategoryAPI';
 import recipesContext from '../context/recipesContext';
 
 function Drinks() {
-  const { filtredDrinks } = useContext(recipesContext);
+  const { filtredDrinks, searchDrinks } = useContext(recipesContext);
   const [drinks, setDrinks] = useState(filtredDrinks);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -18,8 +18,12 @@ function Drinks() {
   };
 
   useEffect(() => {
-    if (!filtredDrinks.length) {
+    if (filtredDrinks.length === 0 && searchDrinks.length === 0) {
+      // (!filtredDrinks.length) {
       fetchDrinks();
+    }
+    if (searchDrinks.length > 0) {
+      setDrinks(searchDrinks);
     }
 
     const fetchDrinksCategories = async () => {
@@ -27,7 +31,7 @@ function Drinks() {
       setCategories(res);
     };
     fetchDrinksCategories();
-  }, []);
+  }, [searchDrinks]);
 
   const handleClickCategories = ({ target }) => {
     if (selectedCategory === target.value) {

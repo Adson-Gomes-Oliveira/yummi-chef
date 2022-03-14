@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import recipesContext from './recipesContext';
+import searchByFirstLetterAPI from '../services/seacrhByFirstLetterAPI';
+import searchByIngredientAPI from '../services/searchByIngredientAPI';
+import searchByNameAPI from '../services/searchByNameAPI';
+import { searchByDrinksIngredient, searchByDrinksName,
+  searchByDrinksFirstLetter } from '../services/searchDrinksAPI';
+import { FIRST_LETTER } from '../data';
 
 function RecipesProvider({ children }) {
   const [isOpenedSearch, setOpened] = useState({ isOpened: false });
   const [searchFoods, setSearchFoods] = useState([]);
   const [filtredFoods, setFiltredFoods] = useState([]);
   const [filtredDrinks, setFiltredDrinks] = useState([]);
+  const [searchDrinks, setSearchDrinks] = useState([]);
+  const [radioInput, setRadioInput] = useState('');
+  const [inputSearch, setInputSearch] = useState('');
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
   };
@@ -24,6 +33,10 @@ function RecipesProvider({ children }) {
 
   function updateSearchFoods(res) {
     setSearchFoods(res);
+  }
+
+  function updateSearchDrinks(res) {
+    setSearchDrinks(res);
   }
 
   function updateRecipesInProgressFood(id, ingredients) {
@@ -96,11 +109,76 @@ function RecipesProvider({ children }) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(conditionalObject));
   }
 
+  async function searchBarFoods() {
+    switch (radioInput) {
+    case 'Ingredient': {
+      const searchIngredients = await searchByIngredientAPI(inputSearch);
+      updateSearchFoods(searchIngredients);
+
+      break;
+    }
+
+    case 'Name': {
+      const searchName = await searchByNameAPI(inputSearch);
+      updateSearchFoods(searchName);
+
+      break;
+    }
+
+    case FIRST_LETTER: {
+      if (inputSearch.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      } else if (inputSearch.length === 1) {
+        const searchByLetter = await searchByFirstLetterAPI(inputSearch);
+        updateSearchFoods(searchByLetter);
+      }
+
+      break;
+    }
+    default:
+      return null;
+    }
+  }
+
+  async function searchBarDrinks() {
+    switch (radioInput) {
+    case 'Ingredient': {
+      const IngredientsDrink = await searchByDrinksIngredient(inputSearch);
+      updateSearchDrinks(IngredientsDrink);
+      break;
+    }
+    case 'Name': {
+      const drinksName = await searchByDrinksName(inputSearch);
+      updateSearchDrinks(drinksName);
+      break;
+    }
+    case FIRST_LETTER: {
+      if (inputSearch.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      } else if (inputSearch.length === 1) {
+        const firstLetterDrink = await searchByDrinksFirstLetter(inputSearch);
+        updateSearchDrinks(firstLetterDrink);
+      }
+      break;
+    }
+
+    default:
+      return null;
+    }
+  }
   return (
     <recipesContext.Provider
       value={ {
+        radioInput,
+        setRadioInput,
+        searchBarDrinks,
+        searchBarFoods,
+        inputSearch,
+        setInputSearch,
         updateSearchFoods,
         searchFoods,
+        updateSearchDrinks,
+        searchDrinks,
         isOpenedSearch,
         openOrCloseSearchInput,
         updateFiltredFoods,

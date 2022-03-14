@@ -1,37 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileImg from '../images/profileIcon.svg';
 import searchImg from '../images/searchIcon.svg';
 import recipesContext from '../context/recipesContext';
-import searchByIngredientAPI from '../services/searchByIngredientAPI';
-import searchByNameAPI from '../services/searchByNameAPI';
-import searchByFirstLetterAPI from '../services/seacrhByFirstLetterAPI';
 import { FIRST_LETTER } from '../data';
 
 export default function Header({ name, isSearched }) {
-  const [inputSearch, setInputSearch] = useState('');
-  const [radioInput, setRadioInput] = useState('');
   const { isOpenedSearch: { isOpened },
-    openOrCloseSearchInput, updateSearchFoods } = useContext(recipesContext);
+    openOrCloseSearchInput, inputSearch, setInputSearch, searchBarDrinks,
+    searchBarFoods, radioInput, setRadioInput } = useContext(recipesContext);
 
-  const handleClick = async () => {
-    if (radioInput === 'Ingredient') {
-      const searchIngredients = await searchByIngredientAPI(inputSearch);
-      updateSearchFoods(searchIngredients.meals);
-    }
-
-    if (radioInput === 'Name') {
-      const searchName = await searchByNameAPI(inputSearch);
-      updateSearchFoods(searchName.meals);
-    }
-
-    if (radioInput === FIRST_LETTER && inputSearch.length > 1) {
-      global.alert('Your search must have only 1 (one) character');
-    } else if (radioInput === FIRST_LETTER && inputSearch.length === 1) {
-      const searchByLetter = await searchByFirstLetterAPI(inputSearch);
-      updateSearchFoods(searchByLetter.meals);
-    }
+  const handleClick = () => {
+    if (window.location.pathname === '/foods') { searchBarFoods(); }
+    if (window.location.pathname === '/drinks') { searchBarDrinks(); }
   };
 
   return (
