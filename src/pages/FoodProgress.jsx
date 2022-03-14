@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import ButtonFavorite from '../components/ButtonFavorite';
 import recipesContext from '../context/recipesContext';
 import ButtonShare from '../components/ButtonShare';
@@ -7,11 +7,12 @@ import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 import './styles/Progress.css';
 
 function FoodProgress() {
+  const history = useHistory();
   const { id } = useParams();
   const { updateRecipesInProgressFood } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
-  const [disableButton] = useState(true);
+  const [disableButton] = useState(false);
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -70,6 +71,51 @@ function FoodProgress() {
     }));
   };
 
+  const handleClickToStopRecipe = () => {
+    const date = new Date();
+    // This reference was used to do the date function https://www.horadecodar.com.br/2021/04/03/como-pegar-a-data-atual-com-javascript/
+    const fullDate = {
+      day: String(date.getDate()).padStart(2, '0'),
+      month: String(date.getMonth() + 1).padStart(2, '0'),
+      year: date.getFullYear(),
+    };
+    const wholeDate = `${fullDate.day}/${fullDate.month}/${fullDate.year}`;
+    const recover = JSON.parse(localStorage.getItem('doneRecipes'));
+    const { strArea: nationality, strCategory: category,
+      strMeal: name, strMealThumb: image, strTags: tags } = recipe;
+    if (recover !== null) {
+      localStorage.setItem('doneRecipes', JSON.stringify([
+        ...recover,
+        {
+          id,
+          type: 'food',
+          nationality,
+          category,
+          alcoholicOrNot: '',
+          name,
+          image,
+          doneDate: wholeDate,
+          tags,
+        },
+      ]));
+      return history.push('/done-recipes');
+    }
+    localStorage.setItem('doneRecipes', JSON.stringify([
+      {
+        id,
+        type: 'food',
+        nationality,
+        category,
+        alcoholicOrNot: '',
+        name,
+        image,
+        doneDate: wholeDate,
+        tags,
+      },
+    ]));
+    history.push('/done-recipes');
+  };
+
   const measures = Object.entries(recipe)
     .reduce((acc, measure) => {
       if (measure[0].includes('strMeasure') && measure[1]) {
@@ -115,7 +161,7 @@ function FoodProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         className="recipeButton finish"
-        // onClick={ handleClickToStopRecipe }
+        onClick={ handleClickToStopRecipe }
         disabled={ disableButton }
       >
         <span>Finish Recipe</span>
