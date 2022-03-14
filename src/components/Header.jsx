@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import profileImg from '../images/profileIcon.svg';
 import searchImg from '../images/searchIcon.svg';
 import recipesContext from '../context/recipesContext';
+import logoHeader from '../images/logoHeader.svg';
 import { FIRST_LETTER } from '../data';
+import './styles/Header.css';
 
 export default function Header({ name, isSearched }) {
   const { isOpenedSearch: { isOpened },
@@ -17,12 +19,25 @@ export default function Header({ name, isSearched }) {
   };
 
   return (
-    <div>
-      <header>
+    <header>
+      <div className="first-section-header">
         <Link to="/profile">
-          <img data-testid="profile-top-btn" alt="profile icon" src={ profileImg } />
+          <img
+            className="profile-icon"
+            data-testid="profile-top-btn"
+            alt="profile icon"
+            src={ profileImg }
+          />
         </Link>
-        <h2 data-testid="page-title">{ name }</h2>
+
+        <div className="main-logo-header">
+          <h2 data-testid="page-title">{ name }</h2>
+          <img
+            className="logo-yummi"
+            src={ logoHeader }
+            alt="header logo"
+          />
+        </div>
         {isSearched
           ? (
             <button type="button" onClick={ openOrCloseSearchInput }>
@@ -33,58 +48,60 @@ export default function Header({ name, isSearched }) {
               />
             </button>)
           : null}
+      </div>
+      <div className="second-section-header">
         {isOpened ? <input
+          className="search-input"
           data-testid="search-input"
           placeholder="Search..."
           type="text"
           onChange={ ({ target }) => setInputSearch(target.value) }
           value={ inputSearch }
         /> : null}
-      </header>
-      <label htmlFor="ingredient">
-        <input
-          type="radio"
-          name="searchRadio"
-          id="ingredient"
-          data-testid="ingredient-search-radio"
-          value={ radioInput }
-          onChange={ () => setRadioInput('Ingredient') }
-        />
-
-        Ingredient
-      </label>
-      <label htmlFor="name">
-        <input
-          type="radio"
-          name="searchRadio"
-          id="name"
-          data-testid="name-search-radio"
-          value={ radioInput }
-          onChange={ () => setRadioInput('Name') }
-        />
-        Name
-
-      </label>
-      <label htmlFor="firstLetter">
-        <input
-          type="radio"
-          name="searchRadio"
-          id="firstLetter"
-          data-testid="first-letter-search-radio"
-          value={ radioInput }
-          onChange={ () => setRadioInput(FIRST_LETTER) }
-        />
-        First letter
-      </label>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ handleClick }
-      >
-        Search
-
-      </button>
-    </div>
+        <div className="search-radio-buttons">
+          <label htmlFor="ingredient">
+            <input
+              type="radio"
+              name="searchRadio"
+              id="ingredient"
+              data-testid="ingredient-search-radio"
+              value={ radioInput }
+              onChange={ () => setRadioInput('Ingredient') }
+            />
+            Ingredient
+          </label>
+          <label htmlFor="name">
+            <input
+              type="radio"
+              name="searchRadio"
+              id="name"
+              data-testid="name-search-radio"
+              value={ radioInput }
+              onChange={ () => setRadioInput('Name') }
+            />
+            Name
+          </label>
+          <label htmlFor="firstLetter">
+            <input
+              type="radio"
+              name="searchRadio"
+              id="firstLetter"
+              data-testid="first-letter-search-radio"
+              value={ radioInput }
+              onChange={ () => setRadioInput(FIRST_LETTER) }
+            />
+            First letter
+          </label>
+        </div>
+        <button
+          type="button"
+          data-testid="exec-search-btn"
+          onClick={ handleClick }
+        >
+          Search
+        </button>
+      </div>
+    </header>
   );
 }
 
