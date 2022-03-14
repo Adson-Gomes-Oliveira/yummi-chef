@@ -80,6 +80,8 @@ function DrinkProgress() {
     const recover = JSON.parse(localStorage.getItem('doneRecipes'));
     const { strArea: nationality, strCategory: category,
       strDrink: name, strDrinkThumb: image, strTags: tags } = recipe;
+    let tag = tags;
+    tag = tags.split(',');
     if (recover !== null) {
       localStorage.setItem('doneRecipes', JSON.stringify([
         ...recover,
@@ -92,7 +94,7 @@ function DrinkProgress() {
           name,
           image,
           doneDate: wholeDate,
-          tags,
+          tags: [...tag],
         },
       ]));
       return history.push('/done-recipes');
@@ -107,7 +109,7 @@ function DrinkProgress() {
         name,
         image,
         doneDate: wholeDate,
-        tags,
+        tags: [...tag],
       },
     ]));
     history.push('/done-recipes');
