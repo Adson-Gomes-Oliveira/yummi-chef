@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 import LogoLogin from '../images/logoSVGART.svg';
-import './styles/Login.css';
+import { LoginPage, LoginForm } from '../styles/login';
 
 // adicionar posteriormente ao arquivo de constantes e importar aqui:
 const MIN_VALUE = 6;
@@ -41,9 +41,9 @@ function Login() {
   }
 
   return (
-    <section className="login">
-      <img className="logo-login" src={ LogoLogin } alt="Logo Art Yummi Chef" />
-      <form>
+    <LoginPage>
+      <img src={ LogoLogin } alt="Logo Art Yummi Chef" />
+      <LoginForm>
         <span>Email</span>
         <input
           type="email"
@@ -67,8 +67,8 @@ function Login() {
           Enter
         </button>
         {isRedirect && <Redirect to="/foods" />}
-      </form>
-    </section>
+      </LoginForm>
+    </LoginPage>
   );
 }
 

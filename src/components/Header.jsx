@@ -6,7 +6,7 @@ import searchImg from '../images/searchIcon.svg';
 import recipesContext from '../context/recipesContext';
 import logoHeader from '../images/logoHeader.svg';
 import { FIRST_LETTER } from '../data';
-import './styles/Header.css';
+import { FirstSection, MainHeader, MainLogo, SecondSection } from '../styles/header';
 
 export default function Header({ name, isSearched }) {
   const { isOpenedSearch: { isOpened },
@@ -19,25 +19,24 @@ export default function Header({ name, isSearched }) {
   };
 
   return (
-    <header>
-      <div className="first-section-header">
+    <MainHeader>
+      <FirstSection>
         <Link to="/profile">
           <img
-            className="profile-icon"
             data-testid="profile-top-btn"
             alt="profile icon"
             src={ profileImg }
           />
         </Link>
 
-        <div className="main-logo-header">
+        <MainLogo>
           <h2 data-testid="page-title">{ name }</h2>
           <img
-            className="logo-yummi"
             src={ logoHeader }
             alt="header logo"
           />
-        </div>
+        </MainLogo>
+
         {isSearched
           ? (
             <button type="button" onClick={ openOrCloseSearchInput }>
@@ -48,17 +47,17 @@ export default function Header({ name, isSearched }) {
               />
             </button>)
           : null}
-      </div>
-      <div className="second-section-header">
+      </FirstSection>
+
+      <SecondSection>
         {isOpened ? <input
-          className="search-input"
           data-testid="search-input"
           placeholder="Search..."
           type="text"
           onChange={ ({ target }) => setInputSearch(target.value) }
           value={ inputSearch }
         /> : null}
-        <div className="search-radio-buttons">
+        <div>
           <label htmlFor="ingredient">
             <input
               type="radio"
@@ -100,8 +99,8 @@ export default function Header({ name, isSearched }) {
         >
           Search
         </button>
-      </div>
-    </header>
+      </SecondSection>
+    </MainHeader>
   );
 }
 
