@@ -12,6 +12,7 @@ function DrinkProgress() {
   const { updateRecipesInProgressDrinks } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
+  const [disableButton, setDisable] = useState(true);
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -20,6 +21,23 @@ function DrinkProgress() {
       }
       return acc;
     }, []);
+
+  useEffect(() => {
+    const verify = Object.values(checkedIngredients);
+    setDisable(true);
+    if (!verify.includes(false)) {
+      setDisable(false);
+    }
+  }, [checkedIngredients]);
+
+  useEffect(() => {
+    const initialCheckedState = {};
+    ingredients.forEach((ing) => {
+      initialCheckedState[ing] = false;
+    });
+    console.log(initialCheckedState);
+    setChecked(initialCheckedState);
+  }, [recipe]);
 
   useEffect(() => {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -49,10 +67,8 @@ function DrinkProgress() {
     console.log(name, checked);
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getRecipe = recipesInProgress.cocktails[id].checkedIngredients;
-    setChecked({
-      ...checkedIngredients,
-      [name]: checked,
-    });
+    setChecked({ ...checkedIngredients, [name]: checked });
+
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...recipesInProgress,
       cocktails: {
@@ -78,23 +94,22 @@ function DrinkProgress() {
     };
     const wholeDate = `${fullDate.day}/${fullDate.month}/${fullDate.year}`;
     const recover = JSON.parse(localStorage.getItem('doneRecipes'));
-    const { strArea: nationality, strCategory: category,
+    const { strCategory: category,
       strDrink: name, strDrinkThumb: image, strTags: tags } = recipe;
-    let tag = tags;
-    tag = tags.split(',');
+    console.log(recipe);
     if (recover !== null) {
       localStorage.setItem('doneRecipes', JSON.stringify([
         ...recover,
         {
           id,
-          type: 'food',
-          nationality,
+          type: 'drink',
+          nationality: '',
           category,
-          alcoholicOrNot: '',
+          alcoholicOrNot: recipe.strAlcoholic,
           name,
           image,
           doneDate: wholeDate,
-          tags: [...tag],
+          tags: [tags],
         },
       ]));
       return history.push('/done-recipes');
@@ -102,14 +117,14 @@ function DrinkProgress() {
     localStorage.setItem('doneRecipes', JSON.stringify([
       {
         id,
-        type: 'food',
-        nationality,
+        type: 'drink',
+        nationality: '',
         category,
-        alcoholicOrNot: '',
+        alcoholicOrNot: recipe.strAlcoholic,
         name,
         image,
         doneDate: wholeDate,
-        tags: [...tag],
+        tags: [tags],
       },
     ]));
     history.push('/done-recipes');
@@ -160,6 +175,7 @@ function DrinkProgress() {
         data-testid="finish-recipe-btn"
         className="recipeButton finish"
         onClick={ handleClickToStopRecipe }
+        disabled={ disableButton }
       >
         <span>Finish Recipe</span>
       </button>
