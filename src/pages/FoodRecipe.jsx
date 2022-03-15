@@ -6,6 +6,8 @@ import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 import ButtonShare from '../components/ButtonShare';
 import ButtonFavorite from '../components/ButtonFavorite';
 import './styles/Recipes.css';
+import ButtonRecipe from '../styles/buttons';
+import { Carousel, RecipesContainer } from '../styles/recipes';
 
 // const SLICE_VIDEO_ID = 11;
 const MAX_RENDER_DRINKS = 6;
@@ -76,7 +78,7 @@ function FoodRecipe() {
     }, []);
 
   return (
-    <section className="recipes">
+    <RecipesContainer>
       <img
         data-testid="recipe-photo"
         src={ recipe.strMealThumb }
@@ -121,7 +123,8 @@ function FoodRecipe() {
         clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
-      <div className="recomendationsContainer">
+
+      <Carousel>
         {
           drinks.map((drink, index) => (
             <span
@@ -140,28 +143,30 @@ function FoodRecipe() {
             </span>
           ))
         }
-      </div>
+      </Carousel>
 
       {recipesInProgress.includes(id) ? (
-        <button
+        <ButtonRecipe
           type="button"
           data-testid="start-recipe-btn"
           className="recipeButton"
           onClick={ handleClickToContinue }
+          btnType="continue"
         >
           <span>Continue Recipe</span>
-        </button>
+        </ButtonRecipe>
       ) : (
-        <button
+        <ButtonRecipe
           type="button"
           data-testid="start-recipe-btn"
           className="recipeButton"
           onClick={ handleClickToStartRecipe }
+          btnType="continue"
         >
           <span>Start Recipe</span>
-        </button>
+        </ButtonRecipe>
       )}
-    </section>
+    </RecipesContainer>
   );
 }
 
