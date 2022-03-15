@@ -58,7 +58,7 @@ function DrinkRecipe() {
     }, []);
 
   const handleClickToContinue = () => {
-    history.push(`/foods/${id}/in-progress`);
+    history.push(`/drinks/${id}/in-progress`);
   };
 
   const handleClickToStartRecipe = () => {

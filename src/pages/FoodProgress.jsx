@@ -12,7 +12,7 @@ function FoodProgress() {
   const { updateRecipesInProgressFood } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
-  const [disableButton] = useState(false);
+  const [disableButton, setDisable] = useState(true);
 
   const ingredients = Object.entries(recipe)
     .reduce((acc, ingredient) => {
@@ -23,9 +23,23 @@ function FoodProgress() {
     }, []);
 
   useEffect(() => {
-  }, []);
+    const verify = Object.values(checkedIngredients);
+    setDisable(true);
+    if (!verify.includes(false)) {
+      setDisable(false);
+    }
+  }, [checkedIngredients]);
 
   useEffect(() => {
+    const initialCheckedState = {};
+    ingredients.forEach((ing) => {
+      initialCheckedState[ing] = false;
+    });
+    console.log(initialCheckedState);
+    setChecked(initialCheckedState);
+  }, [recipe]);
+
+  useEffect(() => { // Recover already checked ingredients
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipesInProgress === null) {
       updateRecipesInProgressFood(id, ingredients);
@@ -47,15 +61,17 @@ function FoodProgress() {
     fetchFoodDetails();
   }, [id]);
 
+  // const verifyFinishButton = () => {
+
+  // };
+
   const handleCheckIngredient = ({ target }) => {
     const { checked, id: name } = target;
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getRecipe = recipesInProgress.meals[id].checkedIngredients;
-    setChecked({
-      ...checkedIngredients,
-      [name]: checked,
-    });
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
+    setChecked({ ...checkedIngredients, [name]: checked });
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ // Set the checked ingredient to the localStorage
       ...recipesInProgress,
       meals: {
         ...recipesInProgress.meals,
@@ -82,8 +98,6 @@ function FoodProgress() {
     const recover = JSON.parse(localStorage.getItem('doneRecipes'));
     const { strArea: nationality, strCategory: category,
       strMeal: name, strMealThumb: image, strTags: tags } = recipe;
-    let tag = tags;
-    tag = tags.split(',');
     if (recover !== null) {
       localStorage.setItem('doneRecipes', JSON.stringify([
         ...recover,
@@ -96,7 +110,7 @@ function FoodProgress() {
           name,
           image,
           doneDate: wholeDate,
-          tags: [...tag],
+          tags: [tags],
         },
       ]));
       return history.push('/done-recipes');
@@ -111,7 +125,7 @@ function FoodProgress() {
         name,
         image,
         doneDate: wholeDate,
-        tags: [...tag],
+        tags: [tags],
       },
     ]));
     history.push('/done-recipes');
