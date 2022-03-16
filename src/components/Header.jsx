@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import profileImg from '../images/profileIcon.svg';
-import searchImg from '../images/searchIcon.svg';
 import recipesContext from '../context/recipesContext';
 import logoHeader from '../images/logoHeader.svg';
 import { FIRST_LETTER } from '../data';
-import { FirstSection, MainHeader, MainLogo, SecondSection } from '../styles/header';
+import { FirstSection, HeaderIcons,
+  MainHeader, MainLogo, SearchArea, SecondSection,
+  InputSearch, FormRadio } from '../styles/header';
+import { ButtonSearch } from '../styles/buttons';
 
-export default function Header({ name, isSearched }) {
+export default function Header({ name, isSearched,
+  customLogoBoxSize, customLogoFontSize }) {
   const { isOpenedSearch: { isOpened },
     openOrCloseSearchInput, inputSearch, setInputSearch, searchBarDrinks,
     searchBarFoods, radioInput, setRadioInput } = useContext(recipesContext);
@@ -22,14 +24,16 @@ export default function Header({ name, isSearched }) {
     <MainHeader>
       <FirstSection>
         <Link to="/profile">
-          <img
+          <HeaderIcons
+            className="material-icons-outlined"
             data-testid="profile-top-btn"
             alt="profile icon"
-            src={ profileImg }
-          />
+          >
+            account_circle
+          </HeaderIcons>
         </Link>
 
-        <MainLogo>
+        <MainLogo size={ customLogoBoxSize } fontSize={ customLogoFontSize }>
           <h2 data-testid="page-title">{ name }</h2>
           <img
             src={ logoHeader }
@@ -40,65 +44,71 @@ export default function Header({ name, isSearched }) {
         {isSearched
           ? (
             <button type="button" onClick={ openOrCloseSearchInput }>
-              <img
+              <HeaderIcons
+                className="material-icons-outlined"
                 data-testid="search-top-btn"
                 alt="search icon"
-                src={ searchImg }
-              />
+              >
+                search
+              </HeaderIcons>
             </button>)
           : null}
       </FirstSection>
 
       <SecondSection>
-        {isOpened ? <input
-          data-testid="search-input"
-          placeholder="Search..."
-          type="text"
-          onChange={ ({ target }) => setInputSearch(target.value) }
-          value={ inputSearch }
-        /> : null}
-        <div>
-          <label htmlFor="ingredient">
-            <input
-              type="radio"
-              name="searchRadio"
-              id="ingredient"
-              data-testid="ingredient-search-radio"
-              value={ radioInput }
-              onChange={ () => setRadioInput('Ingredient') }
+        {isOpened ? (
+          <SearchArea>
+            <InputSearch
+              data-testid="search-input"
+              placeholder="Search..."
+              type="text"
+              onChange={ ({ target }) => setInputSearch(target.value) }
+              value={ inputSearch }
             />
-            Ingredient
-          </label>
-          <label htmlFor="name">
-            <input
-              type="radio"
-              name="searchRadio"
-              id="name"
-              data-testid="name-search-radio"
-              value={ radioInput }
-              onChange={ () => setRadioInput('Name') }
-            />
-            Name
-          </label>
-          <label htmlFor="firstLetter">
-            <input
-              type="radio"
-              name="searchRadio"
-              id="firstLetter"
-              data-testid="first-letter-search-radio"
-              value={ radioInput }
-              onChange={ () => setRadioInput(FIRST_LETTER) }
-            />
-            First letter
-          </label>
-        </div>
-        <button
-          type="button"
-          data-testid="exec-search-btn"
-          onClick={ handleClick }
-        >
-          Search
-        </button>
+            <FormRadio>
+              <label htmlFor="ingredient">
+                <input
+                  type="radio"
+                  name="searchRadio"
+                  id="ingredient"
+                  data-testid="ingredient-search-radio"
+                  value={ radioInput }
+                  onChange={ () => setRadioInput('Ingredient') }
+                />
+                <span>Ingredient</span>
+              </label>
+              <label htmlFor="name">
+                <input
+                  type="radio"
+                  name="searchRadio"
+                  id="name"
+                  data-testid="name-search-radio"
+                  value={ radioInput }
+                  onChange={ () => setRadioInput('Name') }
+                />
+                <span>Name</span>
+              </label>
+              <label htmlFor="firstLetter">
+                <input
+                  type="radio"
+                  name="searchRadio"
+                  id="firstLetter"
+                  data-testid="first-letter-search-radio"
+                  value={ radioInput }
+                  onChange={ () => setRadioInput(FIRST_LETTER) }
+                />
+                <span>First letter</span>
+              </label>
+            </FormRadio>
+            <ButtonSearch
+              type="button"
+              data-testid="exec-search-btn"
+              onClick={ handleClick }
+            >
+              Search
+            </ButtonSearch>
+          </SearchArea>
+        ) : null}
       </SecondSection>
     </MainHeader>
   );
@@ -107,4 +117,6 @@ export default function Header({ name, isSearched }) {
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   isSearched: PropTypes.bool.isRequired,
+  customLogoBoxSize: PropTypes.string.isRequired,
+  customLogoFontSize: PropTypes.string.isRequired,
 };

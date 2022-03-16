@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import ReactPlayer from 'react-player';
 import recipesContext from '../context/recipesContext';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 import ButtonShare from '../components/ButtonShare';
 import ButtonFavorite from '../components/ButtonFavorite';
-import './styles/Recipes.css';
-import ButtonRecipe from '../styles/buttons';
-import { Carousel, RecipesContainer } from '../styles/recipes';
+import { ButtonRecipe } from '../styles/buttons';
+import { Carousel, RecipesContainer,
+  BackgroundRecipe, HeadingRecipe, HeadingTitle,
+  HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
+import { Title, Subtitle, Paragraph, FixElementFixed } from '../styles/index';
 
 // const SLICE_VIDEO_ID = 11;
 const MAX_RENDER_DRINKS = 6;
@@ -79,57 +82,77 @@ function FoodRecipe() {
 
   return (
     <RecipesContainer>
-      <img
-        data-testid="recipe-photo"
-        src={ recipe.strMealThumb }
-        alt={ recipe.strMeal }
-        width="100%"
-      />
-      <h3
-        data-testid="recipe-title"
-      >
-        {recipe.strMeal}
-      </h3>
+      <BackgroundRecipe img={ recipe.strMealThumb } />
 
-      <ButtonShare />
-      <ButtonFavorite recipe={ recipe } type="food" />
-
-      <p
-        data-testid="recipe-category"
-      >
-        { recipe.strCategory }
-      </p>
-      {
-        ingredients.map((ingredient, index) => (
-          <li
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-name-and-measure` }
+      <HeadingRecipe>
+        <HeadingTitle>
+          <Title fontSize="2.5rem" data-testid="recipe-title">{recipe.strMeal}</Title>
+          <Subtitle
+            fontSize="1.3rem"
+            data-testid="recipe-category"
           >
-            { `${ingredient} - ${measures[index]}` }
-          </li>
-        ))
-      }
-      <p data-testid="instructions">
-        { recipe.strInstructions }
-      </p>
-      <iframe
-        data-testid="video"
-        width="360"
-        height="200"
-        src={ recipe.strYoutube }
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer;
-        clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
+            {recipe.strCategory}
+          </Subtitle>
+        </HeadingTitle>
+
+        <HeadingButtons>
+
+          <ButtonFavorite recipe={ recipe } type="food" />
+          <ButtonShare />
+
+        </HeadingButtons>
+      </HeadingRecipe>
+
+      <SideBySideList>
+        <div>
+          {ingredients.map((ingredient, index) => {
+            const divisorNumber = parseInt(ingredients.length / 2, 10);
+            let sideOne;
+            if (index < divisorNumber) {
+              sideOne = (
+                <li
+                  key={ ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  <span>{ingredient}</span>
+                  <span>{measures[index]}</span>
+                </li>
+              );
+            }
+            return (sideOne);
+          })}
+        </div>
+        <div>
+          {ingredients.map((ingredient, index) => {
+            const divisorNumber = parseInt(ingredients.length / 2, 10);
+            let sideTwo;
+            if (index > divisorNumber) {
+              sideTwo = (
+                <li
+                  key={ ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  <span>{ingredient}</span>
+                  <span>{measures[index]}</span>
+                </li>
+              );
+            }
+            return (sideTwo);
+          })}
+        </div>
+      </SideBySideList>
+
+      <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
+
+      <ReactPlayer width="100%" height="40vh" url={ recipe.strYoutube } />
 
       <Carousel>
         {
           drinks.map((drink, index) => (
-            <span
+            <CarouselItem
               data-testid={ `${index}-recomendation-card` }
               key={ drink.strDrink }
+              onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
             >
               <img
                 src={ drink.strDrinkThumb }
@@ -140,32 +163,35 @@ function FoodRecipe() {
               >
                 { drink.strDrink }
               </span>
-            </span>
+            </CarouselItem>
           ))
         }
       </Carousel>
 
-      {recipesInProgress.includes(id) ? (
-        <ButtonRecipe
-          type="button"
-          data-testid="start-recipe-btn"
-          className="recipeButton"
-          onClick={ handleClickToContinue }
-          btnType="continue"
-        >
-          <span>Continue Recipe</span>
-        </ButtonRecipe>
-      ) : (
-        <ButtonRecipe
-          type="button"
-          data-testid="start-recipe-btn"
-          className="recipeButton"
-          onClick={ handleClickToStartRecipe }
-          btnType="continue"
-        >
-          <span>Start Recipe</span>
-        </ButtonRecipe>
-      )}
+      <FixElementFixed>
+        {recipesInProgress.includes(id) ? (
+          <ButtonRecipe
+            type="button"
+            data-testid="start-recipe-btn"
+            className="recipeButton"
+            onClick={ handleClickToContinue }
+            btnType="continue"
+          >
+            <span>Continue Recipe</span>
+          </ButtonRecipe>
+        ) : (
+          <ButtonRecipe
+            type="button"
+            data-testid="start-recipe-btn"
+            className="recipeButton"
+            onClick={ handleClickToStartRecipe }
+            btnType="continue"
+          >
+            <span>Start Recipe</span>
+          </ButtonRecipe>
+        )}
+      </FixElementFixed>
+
     </RecipesContainer>
   );
 }

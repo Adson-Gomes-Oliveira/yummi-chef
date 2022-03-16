@@ -16,6 +16,7 @@ function RecipesProvider({ children }) {
   const [searchDrinks, setSearchDrinks] = useState([]);
   const [radioInput, setRadioInput] = useState('');
   const [inputSearch, setInputSearch] = useState('');
+
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
   };

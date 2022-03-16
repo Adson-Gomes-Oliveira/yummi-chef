@@ -25,12 +25,22 @@ function App() {
       <Route
         exact
         path="/foods/:id"
-        render={ () => <FoodRecipe /> }
+        render={ () => (
+          <>
+            <Header name="Recipe" isSearched={ false } />
+            <FoodRecipe />
+          </>
+        ) }
       />
       <Route
         exact
         path="/drinks/:id"
-        render={ () => <DrinkRecipe /> }
+        render={ () => (
+          <>
+            <Header name="Recipe" isSearched={ false } />
+            <DrinkRecipe />
+          </>
+        ) }
       />
       <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
       <Route path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
@@ -38,7 +48,7 @@ function App() {
         path="/foods"
         render={ () => (
           <>
-            <Header name="Foods" isSearched />
+            <Header name="Foods" isSearched customLogoBoxSize="8rem" />
             <Foods />
             <BottomMenu />
           </>
@@ -69,7 +79,11 @@ function App() {
         path="/explore/foods"
         render={ () => (
           <>
-            <Header name="Explore Foods" isSearched={ false } />
+            <Header
+              name="Explore Foods"
+              isSearched={ false }
+              customLogoBoxSize="15rem"
+            />
             <ExploreFoods />
             <BottomMenu />
           </>) }
@@ -79,7 +93,12 @@ function App() {
         path="/explore/drinks"
         render={ (props) => (
           <>
-            <Header name="Explore Drinks" isSearched={ false } />
+            <Header
+              name="Explore Drinks"
+              isSearched={ false }
+              customLogoBoxSize="15rem"
+              customLogoFontSize="2.6rem"
+            />
             <ExploreDrinks { ...props } />
             <BottomMenu />
           </>) }
@@ -88,7 +107,12 @@ function App() {
         path="/explore/foods/ingredients"
         render={ (props) => (
           <>
-            <Header name="Explore Ingredients" isSearched={ false } />
+            <Header
+              name="Explore Ingredients"
+              isSearched={ false }
+              customLogoBoxSize="15rem"
+              customLogoFontSize="2.3rem"
+            />
             <ExploreFoodsIngredients { ...props } />
             <BottomMenu />
           </>) }
@@ -97,7 +121,13 @@ function App() {
         path="/explore/drinks/ingredients"
         render={ (props) => (
           <>
-            <Header name="Explore Ingredients" isSearched={ false } alt />
+            <Header
+              name="Explore Ingredients"
+              isSearched={ false }
+              alt
+              customLogoBoxSize="15rem"
+              customLogoFontSize="2.3rem"
+            />
             <BottomMenu />
             <ExploreDrinksIngredients { ...props } />
           </>) }
@@ -106,7 +136,12 @@ function App() {
         path="/explore/foods/nationalities"
         render={ () => (
           <>
-            <Header name="Explore Nationalities" isSearched />
+            <Header
+              name="Explore Nationalities"
+              isSearched
+              customLogoBoxSize="15rem"
+              customLogoFontSize="2rem"
+            />
             <ExploreNationalities />
             <BottomMenu />
           </>
