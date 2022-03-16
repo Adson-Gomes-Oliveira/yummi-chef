@@ -9,7 +9,7 @@ import { ButtonRecipe } from '../styles/buttons';
 import { Carousel, RecipesContainer,
   BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
-import { Title, Subtitle, Paragraph, FixElementFixed } from '../styles/index';
+import { Title, Subtitle, Paragraph } from '../styles/index';
 
 const MAX_RENDER_DRINKS = 6;
 
@@ -164,29 +164,27 @@ function DrinkRecipe() {
         }
       </Carousel>
 
-      <FixElementFixed>
-        {recipesInProgress.includes(id) ? (
-          <ButtonRecipe
-            type="button"
-            data-testid="start-recipe-btn"
-            className="recipeButton"
-            onClick={ handleClickToContinue }
-            btnType="continue"
-          >
-            <span>Continue Recipe</span>
-          </ButtonRecipe>
-        ) : (
-          <ButtonRecipe
-            type="button"
-            data-testid="start-recipe-btn"
-            className="recipeButton"
-            onClick={ handleClickToStartRecipe }
-            btnType="continue"
-          >
-            <span>Start Recipe</span>
-          </ButtonRecipe>
-        )}
-      </FixElementFixed>
+      {recipesInProgress.includes(id) ? (
+        <ButtonRecipe
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipeButton"
+          onClick={ handleClickToContinue }
+          btnType="continue"
+        >
+          <span>Continue Recipe</span>
+        </ButtonRecipe>
+      ) : (
+        <ButtonRecipe
+          type="button"
+          data-testid="start-recipe-btn"
+          className="recipeButton"
+          onClick={ handleClickToStartRecipe }
+          btnType="continue"
+        >
+          <span>Start Recipe</span>
+        </ButtonRecipe>
+      )}
 
     </RecipesContainer>
   );

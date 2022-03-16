@@ -82,6 +82,7 @@ export const SearchArea = styled.div`
   height: 150px;
   padding: 15px 10px 10px;
   position: absolute;
+  top: 75px;
 `;
 
 export const InputSearch = styled.input`

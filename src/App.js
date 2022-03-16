@@ -161,7 +161,7 @@ function App() {
         path="/done-recipes"
         render={ () => (
           <>
-            <Header name="Done Recipes" isSearched={ false } />
+            <Header name="Done Recipes" isSearched={ false } customLogoBoxSize="16rem" />
             <DoneRecipes />
             {/* <BottomMenu /> */}
           </>
@@ -171,7 +171,12 @@ function App() {
         path="/favorite-recipes"
         render={ () => (
           <>
-            <Header name="Favorite Recipes" isSearched={ false } />
+            <Header
+              name="Favorite Recipes"
+              isSearched={ false }
+              customLogoBoxSize="14.8rem"
+              customLogoFontSize="2.5rem"
+            />
             {/* <BottomMenu /> */}
           </>
         ) }

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const ButtonRecipe = styled.button`
   background-color: ${(props) => {
-    if (props.btnType === 'continue') { return 'var(--button-alternative-color)'; }
-    if (props.btnType === 'finish') { return 'var(--base-color)'; }
+    if (props.btnType === 'continue') { return 'var(--base-color)'; }
+    if (props.btnType === 'finish') { return '#036B52'; }
   }};
   border: none;
   bottom: 0;
