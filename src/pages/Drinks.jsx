@@ -5,6 +5,8 @@ import getDrinksAPI from '../services/getDrinksAPI';
 import getDrinksCategoriesAPI from '../services/getDrinksCategoriesAPI';
 import getDrinksByCategoryAPI from '../services/getDrinksByCategoryAPI';
 import recipesContext from '../context/recipesContext';
+import { ListFoodsStyles, FoodCard,
+  ButtonsDivStyled } from '../styles/foodsList';
 
 function Drinks() {
   const { filtredDrinks, searchDrinks } = useContext(recipesContext);
@@ -50,46 +52,52 @@ function Drinks() {
   if (drinks.length === 0) return <h3>Carrengando...</h3>;
 
   return (
-    <>
-      <h1>Drinks</h1>
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ fetchDrinks }
-      >
-        All
-      </button>
-      {
-        categories.map((categorie) => (
-          <button
-            type="button"
-            key={ categorie.strCategory }
-            data-testid={ `${categorie.strCategory}-category-filter` }
-            value={ categorie.strCategory }
-            onClick={ handleClickCategories }
-          >
-            { categorie.strCategory }
-          </button>
-        ))
-      }
-      {
-        drinks.map((drink, index) => (
-          <div
-            key={ drink.idDrink }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <Link to={ `/drinks/${drink.idDrink}` }>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ drink.strDrinkThumb }
-                alt={ drink.strDrink }
-              />
-              <h5 data-testid={ `${index}-card-name` }>{ drink.strDrink }</h5>
-            </Link>
-          </div>
-        ))
-      }
-    </>
+    <ListFoodsStyles>
+      <ButtonsDivStyled>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ fetchDrinks }
+        >
+          All
+        </button>
+        {
+          categories.map((categorie) => (
+            <button
+              type="button"
+              key={ categorie.strCategory }
+              data-testid={ `${categorie.strCategory}-category-filter` }
+              value={ categorie.strCategory }
+              onClick={ handleClickCategories }
+            >
+              { categorie.strCategory }
+            </button>
+          ))
+        }
+      </ButtonsDivStyled>
+      <FoodCard>
+        {
+          drinks.map((drink, index) => (
+            <div
+              key={ drink.idDrink }
+              data-testid={ `${index}-recipe-card` }
+            >
+              <Link
+                style={ { textDecoration: 'none' } }
+                to={ `/drinks/${drink.idDrink}` }
+              >
+                <img
+                  data-testid={ `${index}-card-img` }
+                  src={ drink.strDrinkThumb }
+                  alt={ drink.strDrink }
+                />
+                <h5 data-testid={ `${index}-card-name` }>{ drink.strDrink }</h5>
+              </Link>
+            </div>
+          ))
+        }
+      </FoodCard>
+    </ListFoodsStyles>
   );
 }
 
