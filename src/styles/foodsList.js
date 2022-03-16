@@ -14,13 +14,19 @@ export const ButtonsDivStyled = styled.div`
     
     button {
         background-color: var(--base-color);
-        margin: 0.25rem 0.5rem;
-        padding: var(--spacing-scale-2x) var(--spacing-scale-3x);
+        margin: 0.25rem 0.15rem;
+        padding: var(--spacing-scale-2x) 0;
         border: none;
         border-radius: 10px;
         color: white;
-        font-family: bebas , sans-serif;
+        font-family: bebas, sans-serif;
         font-size: 1.25rem;
+        min-width: 7rem;
+        max-width: 7rem;
+    }
+
+    button:first-of-type {
+        margin-left: 0.21rem;
     }
 `;
 
@@ -32,7 +38,7 @@ export const FoodCard = styled.div`
 
         display: flex;
         justify-content: center;
-        width: 8rem;
+        width: 9rem;
         margin: var(--spacing-scale-2x) var(--spacing-scale-3x);
         border: 1px solid var(--base-color);
         border-bottom: 7px solid var(--base-color);
@@ -49,6 +55,7 @@ export const FoodCard = styled.div`
 
     img {
         width: 100%;
+        border-radius: 11px;
     }
     }
 `;
