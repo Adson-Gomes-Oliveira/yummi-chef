@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import shareIcon from '../images/shareIcon.svg';
 
 function ButtonShare() {
   const history = useHistory();
@@ -19,7 +18,7 @@ function ButtonShare() {
         data-testid="share-btn"
         onClick={ handleShare }
       >
-        <img src={ shareIcon } alt="Share icon" />
+        <span className="material-icons-outlined">share</span>
       </button>
       {alert === true && (
         <div className="alert alert-warning alert-dismissible fade show" role="alert">

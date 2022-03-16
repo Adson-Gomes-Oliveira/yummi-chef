@@ -7,7 +7,10 @@ import ButtonShare from '../components/ButtonShare';
 import ButtonFavorite from '../components/ButtonFavorite';
 import './styles/Recipes.css';
 import { ButtonRecipe } from '../styles/buttons';
-import { Carousel, RecipesContainer } from '../styles/recipes';
+import { Carousel, RecipesContainer,
+  BackgroundRecipe, HeadingRecipe, HeadingTitle,
+  HeadingButtons, SideBySideList, Paragraph } from '../styles/recipes';
+import { Title, Subtitle } from '../styles/index';
 
 // const SLICE_VIDEO_ID = 11;
 const MAX_RENDER_DRINKS = 6;
@@ -79,39 +82,68 @@ function FoodRecipe() {
 
   return (
     <RecipesContainer>
-      <img
-        data-testid="recipe-photo"
-        src={ recipe.strMealThumb }
-        alt={ recipe.strMeal }
-        width="100%"
-      />
-      <h3
-        data-testid="recipe-title"
-      >
-        {recipe.strMeal}
-      </h3>
+      <BackgroundRecipe img={ recipe.strMealThumb } />
 
-      <ButtonShare />
-      <ButtonFavorite recipe={ recipe } type="food" />
-
-      <p
-        data-testid="recipe-category"
-      >
-        { recipe.strCategory }
-      </p>
-      {
-        ingredients.map((ingredient, index) => (
-          <li
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-name-and-measure` }
+      <HeadingRecipe>
+        <HeadingTitle>
+          <Title fontSize="2.5rem" data-testid="recipe-title">{recipe.strMeal}</Title>
+          <Subtitle
+            fontSize="1.3rem"
+            data-testid="recipe-category"
           >
-            { `${ingredient} - ${measures[index]}` }
-          </li>
-        ))
-      }
-      <p data-testid="instructions">
-        { recipe.strInstructions }
-      </p>
+            {recipe.strCategory}
+          </Subtitle>
+        </HeadingTitle>
+
+        <HeadingButtons>
+
+          <ButtonFavorite recipe={ recipe } type="food" />
+          <ButtonShare />
+
+        </HeadingButtons>
+      </HeadingRecipe>
+
+      <SideBySideList>
+        <div>
+          {ingredients.map((ingredient, index) => {
+            const divisorNumber = parseInt(ingredients.length / 2, 10);
+            let sideOne;
+            if (index < divisorNumber) {
+              sideOne = (
+                <li
+                  key={ ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  <span>{ingredient}</span>
+                  <span>{measures[index]}</span>
+                </li>
+              );
+            }
+            return (sideOne);
+          })}
+        </div>
+        <div>
+          {ingredients.map((ingredient, index) => {
+            const divisorNumber = parseInt(ingredients.length / 2, 10);
+            let sideTwo;
+            if (index > divisorNumber) {
+              sideTwo = (
+                <li
+                  key={ ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  <span>{ingredient}</span>
+                  <span>{measures[index]}</span>
+                </li>
+              );
+            }
+            return (sideTwo);
+          })}
+        </div>
+      </SideBySideList>
+
+      <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
+
       <iframe
         data-testid="video"
         width="360"

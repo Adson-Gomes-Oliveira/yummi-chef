@@ -25,7 +25,12 @@ function App() {
       <Route
         exact
         path="/foods/:id"
-        render={ () => <FoodRecipe /> }
+        render={ () => (
+          <>
+            <Header name="Recipe" isSearched={ false } />
+            <FoodRecipe />
+          </>
+        ) }
       />
       <Route
         exact

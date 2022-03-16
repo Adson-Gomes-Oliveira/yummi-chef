@@ -63,7 +63,7 @@ function ButtonFavorite({ recipe, type }) {
           onClick={ handleFavorite }
           src={ blackHeartIcon }
         >
-          <img src={ blackHeartIcon } alt="Favorite" />
+          <span className="material-icons-outlined">favorite</span>
         </button>
       ) : (
         <button
@@ -72,7 +72,7 @@ function ButtonFavorite({ recipe, type }) {
           onClick={ handleFavorite }
           src={ whiteHeartIcon }
         >
-          <img src={ whiteHeartIcon } alt="Favorite" />
+          <span className="material-icons-outlined">favorite_border</span>
         </button>
       )}
     </div>
