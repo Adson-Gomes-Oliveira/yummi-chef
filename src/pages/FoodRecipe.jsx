@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import ReactPlayer from 'react-player';
 import recipesContext from '../context/recipesContext';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 import ButtonShare from '../components/ButtonShare';
 import ButtonFavorite from '../components/ButtonFavorite';
-import './styles/Recipes.css';
 import { ButtonRecipe } from '../styles/buttons';
 import { Carousel, RecipesContainer,
   BackgroundRecipe, HeadingRecipe, HeadingTitle,
-  HeadingButtons, SideBySideList, Paragraph } from '../styles/recipes';
-import { Title, Subtitle } from '../styles/index';
+  HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
+import { Title, Subtitle, Paragraph, FixElementFixed } from '../styles/index';
 
 // const SLICE_VIDEO_ID = 11;
 const MAX_RENDER_DRINKS = 6;
@@ -144,24 +144,15 @@ function FoodRecipe() {
 
       <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
 
-      <iframe
-        data-testid="video"
-        width="360"
-        height="200"
-        src={ recipe.strYoutube }
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer;
-        clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
+      <ReactPlayer width="100%" height="40vh" url={ recipe.strYoutube } />
 
       <Carousel>
         {
           drinks.map((drink, index) => (
-            <span
+            <CarouselItem
               data-testid={ `${index}-recomendation-card` }
               key={ drink.strDrink }
+              onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
             >
               <img
                 src={ drink.strDrinkThumb }
@@ -172,32 +163,35 @@ function FoodRecipe() {
               >
                 { drink.strDrink }
               </span>
-            </span>
+            </CarouselItem>
           ))
         }
       </Carousel>
 
-      {recipesInProgress.includes(id) ? (
-        <ButtonRecipe
-          type="button"
-          data-testid="start-recipe-btn"
-          className="recipeButton"
-          onClick={ handleClickToContinue }
-          btnType="continue"
-        >
-          <span>Continue Recipe</span>
-        </ButtonRecipe>
-      ) : (
-        <ButtonRecipe
-          type="button"
-          data-testid="start-recipe-btn"
-          className="recipeButton"
-          onClick={ handleClickToStartRecipe }
-          btnType="continue"
-        >
-          <span>Start Recipe</span>
-        </ButtonRecipe>
-      )}
+      <FixElementFixed>
+        {recipesInProgress.includes(id) ? (
+          <ButtonRecipe
+            type="button"
+            data-testid="start-recipe-btn"
+            className="recipeButton"
+            onClick={ handleClickToContinue }
+            btnType="continue"
+          >
+            <span>Continue Recipe</span>
+          </ButtonRecipe>
+        ) : (
+          <ButtonRecipe
+            type="button"
+            data-testid="start-recipe-btn"
+            className="recipeButton"
+            onClick={ handleClickToStartRecipe }
+            btnType="continue"
+          >
+            <span>Start Recipe</span>
+          </ButtonRecipe>
+        )}
+      </FixElementFixed>
+
     </RecipesContainer>
   );
 }

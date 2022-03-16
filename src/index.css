@@ -8,6 +8,7 @@
   --base-color: #cc0300;
   --button-alternative-color: #1cabee;
   --body-color: #d1d0cb;
+  box-sizing: border-box;
 }
 
 @font-face {

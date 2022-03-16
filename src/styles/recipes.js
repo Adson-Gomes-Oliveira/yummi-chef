@@ -8,18 +8,16 @@ export const RecipesContainer = styled.section`
 
 export const Carousel = styled.div`
   align-items: center;
-  background-color: yellow;
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: var(--spacing-scale-3x) 20px;
+  padding: 15px 15px;
 
-  span {
-    margin: 0 45px;
+  div {
+    margin: 0 10px;
     margin-top: 20px;
-    width: 100px;
 
     &:first-of-type { margin-left: 0; }
     &:last-of-type { margin-right: 30px; }
@@ -27,6 +25,27 @@ export const Carousel = styled.div`
 
   img { 
     width: 130px; 
+  }
+`;
+
+export const CarouselItem = styled.div`
+  background-color: var(--base-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 200px;
+  border-radius: 10px;
+
+  img {
+    border-radius: 10px 10px 0 0;
+    width: 150px;
+  }
+
+  span {
+    background-color: white;
+    font-family: bebas , sans-serif;
+    color: var(--base-color);
+    font-size: 1.5rem;
   }
 `;
 
@@ -59,6 +78,7 @@ export const HeadingButtons = styled.div`
 
   span {
     font-size: 2rem;
+    color: var(--base-color);
   }
 `;
 

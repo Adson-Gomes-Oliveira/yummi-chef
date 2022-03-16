@@ -10,3 +10,11 @@ export const Subtitle = styled.span`
   font-family: bebas , sans-serif;
   font-size: ${(props) => props.fontSize};
 `;
+
+export const Paragraph = styled.p`
+  padding: 15px;
+`;
+
+export const FixElementFixed = styled.div`
+  margin-top: 90px;
+`;

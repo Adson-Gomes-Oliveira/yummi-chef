@@ -13,7 +13,6 @@ export const ButtonRecipe = styled.button`
   padding: var(--spacing-scale-3x);
   position: fixed;
   width: 100%;
-  z-index: 2;
 
   &:disabled {
     background-color: var(--body-color);

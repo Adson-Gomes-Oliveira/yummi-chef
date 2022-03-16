@@ -35,7 +35,12 @@ function App() {
       <Route
         exact
         path="/drinks/:id"
-        render={ () => <DrinkRecipe /> }
+        render={ () => (
+          <>
+            <Header name="Recipe" isSearched={ false } />
+            <DrinkRecipe />
+          </>
+        ) }
       />
       <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
       <Route path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
