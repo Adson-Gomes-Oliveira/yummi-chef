@@ -107,7 +107,3 @@ export const SideBySideList = styled.ul`
     }
   }
 `;
-
-export const Paragraph = styled.p`
-  padding: 15px;
-`;
