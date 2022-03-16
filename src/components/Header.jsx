@@ -10,7 +10,7 @@ import { FirstSection, HeaderIcons,
 import { ButtonSearch } from '../styles/buttons';
 
 export default function Header({ name, isSearched,
-  customLogoBoxSize, customLogoFontSize }) {
+  customLogoBoxSize, customLogoFontSize, isBack }) {
   const { isOpenedSearch: { isOpened },
     openOrCloseSearchInput, inputSearch, setInputSearch, searchBarDrinks,
     searchBarFoods, radioInput, setRadioInput } = useContext(recipesContext);
@@ -23,15 +23,20 @@ export default function Header({ name, isSearched,
   return (
     <MainHeader>
       <FirstSection>
-        <Link to="/profile">
-          <HeaderIcons
-            className="material-icons-outlined"
-            data-testid="profile-top-btn"
-            alt="profile icon"
-          >
-            account_circle
-          </HeaderIcons>
-        </Link>
+        {isBack ? (
+          <Link to="/profile">
+            <HeaderIcons
+              className="material-icons-outlined"
+              data-testid="profile-top-btn"
+              alt="profile icon"
+            >
+              account_circle
+            </HeaderIcons>
+          </Link>)
+          : (
+            <span className="material-icons-outlined">
+              arrow_back_ios
+            </span>)}
 
         <MainLogo size={ customLogoBoxSize } fontSize={ customLogoFontSize }>
           <h2 data-testid="page-title">{ name }</h2>
@@ -52,7 +57,16 @@ export default function Header({ name, isSearched,
                 search
               </HeaderIcons>
             </button>)
-          : null}
+          : (
+            <Link to="/profile">
+              <HeaderIcons
+                className="material-icons-outlined"
+                data-testid="profile-top-btn"
+                alt="profile icon"
+              >
+                account_circle
+              </HeaderIcons>
+            </Link>)}
       </FirstSection>
 
       <SecondSection>
@@ -117,6 +131,7 @@ export default function Header({ name, isSearched,
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   isSearched: PropTypes.bool.isRequired,
+  isBack: PropTypes.bool.isRequired,
   customLogoBoxSize: PropTypes.string.isRequired,
   customLogoFontSize: PropTypes.string.isRequired,
 };

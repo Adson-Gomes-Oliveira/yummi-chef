@@ -69,7 +69,7 @@ function App() {
         path="/explore"
         render={ () => (
           <>
-            <Header name="Explore" isSearched={ false } />
+            <Header name="Explore" isSearched={ false } isBack={ false } />
             <Explore />
             <BottomMenu />
           </>) }
