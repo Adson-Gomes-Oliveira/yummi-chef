@@ -4,7 +4,10 @@ import recipesContext from '../context/recipesContext';
 import ButtonFavorite from '../components/ButtonFavorite';
 import ButtonShare from '../components/ButtonShare';
 import getDrinkRecipeAPI from '../services/getDrinkRecipeAPI';
-import './styles/Progress.css';
+import { ButtonRecipe } from '../styles/buttons';
+import { RecipesContainer, BackgroundRecipe, HeadingRecipe, HeadingTitle,
+  HeadingButtons, SideBySideList } from '../styles/recipes';
+import { Title, Subtitle, Paragraph } from '../styles/index';
 
 function DrinkProgress() {
   const history = useHistory();
@@ -30,19 +33,16 @@ function DrinkProgress() {
     }
   }, [checkedIngredients]);
 
-  useEffect(() => {
+  useEffect(() => { // Recover previous checked ingredients
     const initialCheckedState = {};
     ingredients.forEach((ing) => {
       initialCheckedState[ing] = false;
     });
     console.log(initialCheckedState);
     setChecked(initialCheckedState);
-  }, [recipe]);
 
-  useEffect(() => {
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipesInProgress === null) {
-      console.log(ingredients);
       updateRecipesInProgressDrinks(id, ingredients);
       const recipeStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const recipeCooking = recipeStorage.cocktails[id];
@@ -51,8 +51,9 @@ function DrinkProgress() {
     }
     const recipeCooking = recipesInProgress.cocktails[id];
     const isChecked = recipeCooking.checkedIngredients;
+    console.log(isChecked);
     setChecked(isChecked);
-  }, []);
+  }, [recipe]);
 
   useEffect(() => {
     const fetchDrinkDetails = async () => {
@@ -139,47 +140,97 @@ function DrinkProgress() {
     }, []);
 
   return (
-    <section className="food-progress">
-      <img
-        data-testid="recipe-photo"
-        src={ recipe.strDrinkThumb }
-        alt={ recipe.strDrink }
-        width="100%"
-      />
+    <RecipesContainer>
+      <BackgroundRecipe img={ recipe.strDrinkThumb } />
 
-      <h3 data-testid="recipe-title">{recipe.strDrink}</h3>
-      <span data-testid="recipe-category">{ recipe.strCategory }</span>
+      <HeadingRecipe>
+        <HeadingTitle>
+          <Title fontSize="2.5rem" data-testid="recipe-title">{recipe.strDrink}</Title>
+          <Subtitle
+            fontSize="1.3rem"
+            data-testid="recipe-category"
+          >
+            {recipe.strCategory}
+          </Subtitle>
+        </HeadingTitle>
 
-      <ButtonShare />
-      <ButtonFavorite recipe={ recipe } type="drink" />
+        <HeadingButtons>
 
-      {ingredients.map((ingredient, index) => (
-        <label
-          key={ ingredient }
-          htmlFor={ ingredient }
-          data-testid={ `${index}-ingredient-step` }
-          className="ingredient"
-        >
-          <input
-            id={ ingredient }
-            type="checkbox"
-            onChange={ handleCheckIngredient }
-            checked={ checkedIngredients[ingredient] }
-          />
-          <span>{ `${ingredient} - ${measures[index]}` }</span>
-        </label>
-      ))}
-      <p data-testid="instructions">{ recipe.strInstructions }</p>
-      <button
+          <ButtonFavorite recipe={ recipe } type="food" />
+          <ButtonShare />
+
+        </HeadingButtons>
+      </HeadingRecipe>
+
+      <SideBySideList>
+        <div>
+          {ingredients.map((ingredient, index) => {
+            const divisorNumber = parseInt(ingredients.length / 2, 10);
+            let sideOne;
+            if (index < divisorNumber) {
+              sideOne = (
+                <label
+                  key={ ingredient }
+                  htmlFor={ ingredient }
+                  data-testid={ `${index}-ingredient-step` }
+                  className="ingredient"
+                >
+                  <input
+                    id={ ingredient }
+                    type="checkbox"
+                    onChange={ handleCheckIngredient }
+                    checked={ checkedIngredients[ingredient] }
+                  />
+                  <span>{ingredient}</span>
+                  <span>{measures[index]}</span>
+                </label>
+              );
+            }
+            return (sideOne);
+          })}
+        </div>
+        <div>
+          {ingredients.map((ingredient, index) => {
+            const divisorNumber = parseInt(ingredients.length / 2, 10);
+            let sideTwo;
+            if (index > divisorNumber) {
+              sideTwo = (
+                <label
+                  key={ ingredient }
+                  htmlFor={ ingredient }
+                  data-testid={ `${index}-ingredient-step` }
+                  className="ingredient"
+                >
+                  <input
+                    id={ ingredient }
+                    type="checkbox"
+                    onChange={ handleCheckIngredient }
+                    checked={ checkedIngredients[ingredient] }
+                  />
+                  <span>{ingredient}</span>
+                  <span>{measures[index]}</span>
+                </label>
+              );
+            }
+            return (sideTwo);
+          })}
+        </div>
+      </SideBySideList>
+
+      <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
+
+      <ButtonRecipe
         type="button"
         data-testid="finish-recipe-btn"
         className="recipeButton finish"
         onClick={ handleClickToStopRecipe }
         disabled={ disableButton }
+        btnType="finish"
       >
         <span>Finish Recipe</span>
-      </button>
-    </section>
+      </ButtonRecipe>
+
+    </RecipesContainer>
   );
 }
 

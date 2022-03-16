@@ -14,7 +14,3 @@ export const Subtitle = styled.span`
 export const Paragraph = styled.p`
   padding: 15px;
 `;
-
-export const FixElementFixed = styled.div`
-  margin-top: 90px;
-`;

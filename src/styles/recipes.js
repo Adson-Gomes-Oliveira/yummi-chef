@@ -14,6 +14,7 @@ export const Carousel = styled.div`
   overflow-x: scroll;
   overflow-y: hidden;
   padding: 15px 15px;
+  gap: 2rem;
 
   div {
     margin: 0 10px;
@@ -95,6 +96,14 @@ export const SideBySideList = styled.ul`
     width: 100%;
 
     li {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid white;
+      width: 100%;
+      padding: 10px;
+    }
+
+    label {
       display: flex;
       flex-direction: column;
       border-bottom: 1px solid white;
