@@ -6,7 +6,7 @@ import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
 import ButtonShare from '../components/ButtonShare';
 import ButtonFavorite from '../components/ButtonFavorite';
 import './styles/Recipes.css';
-import ButtonRecipe from '../styles/buttons';
+import { ButtonRecipe } from '../styles/buttons';
 import { Carousel, RecipesContainer } from '../styles/recipes';
 
 // const SLICE_VIDEO_ID = 11;

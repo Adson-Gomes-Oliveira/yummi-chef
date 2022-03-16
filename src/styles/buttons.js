@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ButtonRecipe = styled.button`
+export const ButtonRecipe = styled.button`
   background-color: ${(props) => {
     if (props.btnType === 'continue') { return 'var(--button-alternative-color)'; }
     if (props.btnType === 'finish') { return 'var(--base-color)'; }
@@ -20,4 +20,12 @@ const ButtonRecipe = styled.button`
   }
 `;
 
-export default ButtonRecipe;
+export const ButtonSearch = styled.button`
+  background-color: var(--base-color);
+  border: none;
+  color: white;
+  font-family: bebas , sans-serif;
+  padding: 6px;
+  width: 130px;
+  font-size: 18px;
+`;
