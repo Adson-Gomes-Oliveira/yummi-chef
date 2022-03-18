@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
-import './styles/BottomMenu.css';
+import BottomMenuStyled from '../styles/bottomMenu';
 import recipesContext from '../context/recipesContext';
 
 function BottomMenu() {
@@ -15,7 +15,7 @@ function BottomMenu() {
     closeSearch(); // switch openOrCloseSearchInput to false
   };
   return (
-    <section className="footer" data-testid="footer">
+    <BottomMenuStyled className="footer" data-testid="footer">
       <div className="menu-icons">
         <Link to="/drinks" onClick={ handleClick }>
           <img src={ drinkIcon } alt="drink-icon" data-testid="drinks-bottom-btn" />
@@ -27,7 +27,7 @@ function BottomMenu() {
           <img src={ mealIcon } alt="meal-icon" data-testid="food-bottom-btn" />
         </Link>
       </div>
-    </section>
+    </BottomMenuStyled>
   );
 }
 

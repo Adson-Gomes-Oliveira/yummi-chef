@@ -3,15 +3,22 @@ import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min
 import recipesContext from '../context/recipesContext';
 import getFoodsAPI from '../services/getFoodsAPI';
 import getDrinkRecipeAPI from '../services/getDrinkRecipeAPI';
-import './styles/Recipes.css';
 import ButtonShare from '../components/ButtonShare';
 import ButtonFavorite from '../components/ButtonFavorite';
+import { ButtonRecipe } from '../styles/buttons';
+import { Carousel, RecipesContainer,
+  BackgroundRecipe, HeadingRecipe, HeadingTitle,
+  HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
+import { Title, Subtitle, Paragraph } from '../styles/index';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 const MAX_RENDER_DRINKS = 6;
 
 function DrinkRecipe() {
   const history = useHistory();
-  const { updateRecipesInProgressDrinks } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks,
+    setLoading, loading } = useContext(recipesContext);
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [foods, setFoods] = useState([]);
@@ -37,8 +44,10 @@ function DrinkRecipe() {
 
   useEffect(() => {
     const fethDrinkRecipe = async () => {
+      setLoading(true);
       const res = await getDrinkRecipeAPI(id);
       setRecipe(res);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fethDrinkRecipe();
 
@@ -58,7 +67,7 @@ function DrinkRecipe() {
     }, []);
 
   const handleClickToContinue = () => {
-    history.push(`/foods/${id}/in-progress`);
+    history.push(`/drinks/${id}/in-progress`);
   };
 
   const handleClickToStartRecipe = () => {
@@ -74,79 +83,91 @@ function DrinkRecipe() {
       return acc;
     }, []);
 
+  if (loading) { return <Loading />; }
   return (
-    <section className="recipes">
-      <img
-        data-testid="recipe-photo"
-        src={ recipe.strDrinkThumb }
-        alt={ recipe.strDrink }
-        width="100%"
-      />
-      <h3
-        data-testid="recipe-title"
-      >
-        {recipe.strDrink}
-      </h3>
+    <RecipesContainer>
+      <BackgroundRecipe img={ recipe.strDrinkThumb } />
 
-      <ButtonShare />
-      <ButtonFavorite recipe={ recipe } type="drink" />
-
-      <p
-        data-testid="recipe-category"
-      >
-        { recipe.strAlcoholic }
-      </p>
-      {
-        ingredients.map((ingredient, index) => (
-          <li
-            key={ ingredient }
-            data-testid={ `${index}-ingredient-name-and-measure` }
+      <HeadingRecipe>
+        <HeadingTitle>
+          <Title fontSize="2.5rem" data-testid="recipe-title">{recipe.strDrink}</Title>
+          <Subtitle
+            fontSize="1.3rem"
+            data-testid="recipe-category"
           >
-            { `${ingredient} - ${measures[index]}` }
-          </li>
-        ))
-      }
-      <p data-testid="instructions">
-        { recipe.strInstructions }
-      </p>
+            { recipe.strAlcoholic }
+          </Subtitle>
+        </HeadingTitle>
 
-      <div className="recomendationsContainer">
+        <HeadingButtons>
+
+          <ButtonFavorite recipe={ recipe } type="drink" />
+          <ButtonShare />
+
+        </HeadingButtons>
+      </HeadingRecipe>
+
+      <SideBySideList>
+        <div>
+          {ingredients.map((ingredient, index) => (
+            <li
+              key={ ingredient }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              <span>{ingredient}</span>
+              <span>{measures[index]}</span>
+            </li>
+          ))}
+        </div>
+      </SideBySideList>
+
+      <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
+
+      <Carousel>
         {
-          foods.map((foos, index) => (
-            <span
-              key={ index }
+          foods.map((food, index) => (
+            <CarouselItem
               data-testid={ `${index}-recomendation-card` }
+              key={ food.strMeal }
+              onClick={ () => history.push(`/foods/${food.idMeal}`) }
             >
               <img
-                src={ foos.strMealThumb }
-                alt={ foos.strMeal }
+                src={ food.strMealThumb }
+                alt={ food.strMeal }
               />
-              <h5 data-testid={ `${index}-recomendation-title` }>{ foos.strMeal }</h5>
-            </span>
+              <span
+                data-testid={ `${index}-recomendation-title` }
+              >
+                { food.strMeal }
+              </span>
+            </CarouselItem>
           ))
         }
-      </div>
+      </Carousel>
 
       {recipesInProgress.includes(id) ? (
-        <button
+        <ButtonRecipe
           type="button"
           data-testid="start-recipe-btn"
           className="recipeButton"
           onClick={ handleClickToContinue }
+          btnType="continue"
         >
           <span>Continue Recipe</span>
-        </button>
+        </ButtonRecipe>
       ) : (
-        <button
+        <ButtonRecipe
           type="button"
           data-testid="start-recipe-btn"
           className="recipeButton"
           onClick={ handleClickToStartRecipe }
+          btnType="continue"
         >
           <span>Start Recipe</span>
-        </button>
+        </ButtonRecipe>
       )}
-    </section>
+
+    </RecipesContainer>
   );
 }
 

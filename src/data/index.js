@@ -26,3 +26,14 @@ export const FOODS_BY_NATIONALITIES_API = 'https://www.themealdb.com/api/json/v1
 
 export const RANDOM_FOODS_API = 'https://www.themealdb.com/api/json/v1/1/random.php';
 export const RANDOM_DRINKS_API = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+
+export const WAIT_LOAD = 1000;
+export const QUOTES_DATA = {
+  foods1: 'Food is Love and Love is Life',
+  foods2: 'There is no Sincere Love than the Love of Food',
+  foods3: 'Life is a combination of Magic and Pasta',
+  foods4: 'Good food is the foundation of genuine happiness',
+  foods5: 'Food is the ingredient that bind us Together',
+  drinks1: 'I only Drink Wine on two Occasions, when I am in Love and when I am not',
+  drinks2: 'Drink to love, Drink to cry, Drink to dance, Drink to Drink',
+};

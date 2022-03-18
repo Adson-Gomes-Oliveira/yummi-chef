@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import propTypes from 'prop-types';
+import shareIcon from '../images/shareIcon.svg';
 
-function ButtonShare() {
-  const history = useHistory();
+function ButtonShareDoneRecipes({ index, id }) {
   const [alert, setAlert] = useState(false);
 
   const handleShare = () => {
-    const recipeRoute = history.location.pathname.replace('/in-progress', '');
-    navigator.clipboard.writeText(`http://localhost:3000${recipeRoute}`);
+    navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
     setAlert(true);
   };
 
@@ -15,10 +14,11 @@ function ButtonShare() {
     <div className="button-share">
       <button
         type="button"
-        data-testid="share-btn"
+        data-testid={ `${index}-horizontal-share-btn` }
         onClick={ handleShare }
+        src={ shareIcon }
       >
-        <span className="material-icons-outlined">share</span>
+        <img src={ shareIcon } alt="Share icon" />
       </button>
       {alert === true && (
         <div className="alert alert-warning alert-dismissible fade show" role="alert">
@@ -38,4 +38,8 @@ function ButtonShare() {
   );
 }
 
-export default ButtonShare;
+ButtonShareDoneRecipes.propTypes = {
+  index: propTypes.number.isRequired,
+  id: propTypes.string.isRequired,
+};
+export default ButtonShareDoneRecipes;

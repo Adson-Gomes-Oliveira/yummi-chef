@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import recipesContext from '../context/recipesContext';
 import getRandomFoodAPI from '../services/getRandomFoodAPI';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 export default function ExploreFoods() {
   const history = useHistory();
+  const { setLoading, loading } = useContext(recipesContext);
   const handleClick = async () => {
     try {
+      setLoading(true);
       const res = await getRandomFoodAPI();
-      console.log(res);
       history.push(`/foods/${res.idMeal}`);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (loading) { return <Loading />; }
   return (
     <section className="explore">
       <Link to="/explore/foods/ingredients">
