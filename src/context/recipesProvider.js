@@ -177,6 +177,7 @@ function RecipesProvider({ children }) {
       return null;
     }
   }
+
   return (
     <recipesContext.Provider
       value={ {

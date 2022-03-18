@@ -109,40 +109,15 @@ function DrinkRecipe() {
 
       <SideBySideList>
         <div>
-          {ingredients.map((ingredient, index) => {
-            const divisorNumber = parseInt(ingredients.length / 2, 10);
-            let sideOne;
-            if (index < divisorNumber) {
-              sideOne = (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  <span>{ingredient}</span>
-                  <span>{measures[index]}</span>
-                </li>
-              );
-            }
-            return (sideOne);
-          })}
-        </div>
-        <div>
-          {ingredients.map((ingredient, index) => {
-            const divisorNumber = parseInt(ingredients.length / 2, 10);
-            let sideTwo;
-            if (index > divisorNumber) {
-              sideTwo = (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  <span>{ingredient}</span>
-                  <span>{measures[index]}</span>
-                </li>
-              );
-            }
-            return (sideTwo);
-          })}
+          {ingredients.map((ingredient, index) => (
+            <li
+              key={ ingredient }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              <span>{ingredient}</span>
+              <span>{measures[index]}</span>
+            </li>
+          ))}
         </div>
       </SideBySideList>
 

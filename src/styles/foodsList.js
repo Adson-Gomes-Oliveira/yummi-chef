@@ -20,7 +20,7 @@ export const ButtonsDivStyled = styled.div`
         border-radius: 10px;
         color: white;
         font-family: bebas, sans-serif;
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         min-width: 7rem;
         max-width: 7rem;
     }
@@ -47,8 +47,8 @@ export const FoodCard = styled.div`
     h5 {
         margin: 0;
         margin-top: 4px;
-        font-size: 2rem;
-        font-family: leChant;
+        font-size: 1.5rem;
+        font-family: bebas;
         color: var(--base-color);
         text-align: center;
     }

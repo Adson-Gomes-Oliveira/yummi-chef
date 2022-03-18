@@ -52,28 +52,30 @@ function FoodProgress() {
   }, [recipe]);
 
   useEffect(() => { // Recover previous checked ingredients
+    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const initialCheckedState = {};
+
+    if (recipesInProgress === null) {
+      return updateRecipesInProgressFood(id, ingredients);
+    }
+
+    const recipeCooking = recipesInProgress.meals[id];
+    const isChecked = recipeCooking.checkedIngredients;
+
     ingredients.forEach((ing) => {
       initialCheckedState[ing] = false;
     });
-    setChecked(initialCheckedState);
+    console.log(initialCheckedState);
 
-    const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (recipesInProgress === null) {
-      updateRecipesInProgressFood(id, ingredients);
-      const recipeStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const recipeCooking = recipeStorage.meals[id];
-      const isChecked = recipeCooking.checkedIngredients;
-      return setChecked(isChecked);
-    }
-    const recipeCooking = recipesInProgress.meals[id];
-    const isChecked = recipeCooking.checkedIngredients;
+    setChecked(initialCheckedState);
     setChecked(isChecked);
-  }, [recipe]);
+  }, [recipe, ingredients]);
 
   useEffect(() => { // Verify if all ingredients are checked to control the disableButton...
     const verify = Object.values(checkedIngredients);
-    if (verify.length > 0) {
+    const numberOfIngredients = ingredients.length;
+
+    if (verify.length >= numberOfIngredients) {
       setDisable(false);
       if (verify.includes(false)) {
         console.log('cheguei no if');
@@ -173,56 +175,23 @@ function FoodProgress() {
 
       <SideBySideList>
         <div>
-          {ingredients.map((ingredient, index) => {
-            const divisorNumber = parseInt(ingredients.length / 2, 10);
-            let sideOne;
-            if (index < divisorNumber) {
-              sideOne = (
-                <label
-                  key={ ingredient }
-                  htmlFor={ ingredient }
-                  data-testid={ `${index}-ingredient-step` }
-                  className="ingredient"
-                >
-                  <input
-                    id={ ingredient }
-                    type="checkbox"
-                    onChange={ handleCheckIngredient }
-                    checked={ checkedIngredients[ingredient] }
-                  />
-                  <span>{ingredient}</span>
-                  <span>{measures[index]}</span>
-                </label>
-              );
-            }
-            return (sideOne);
-          })}
-        </div>
-        <div>
-          {ingredients.map((ingredient, index) => {
-            const divisorNumber = parseInt(ingredients.length / 2, 10);
-            let sideTwo;
-            if (index > divisorNumber) {
-              sideTwo = (
-                <label
-                  key={ ingredient }
-                  htmlFor={ ingredient }
-                  data-testid={ `${index}-ingredient-step` }
-                  className="ingredient"
-                >
-                  <input
-                    id={ ingredient }
-                    type="checkbox"
-                    onChange={ handleCheckIngredient }
-                    checked={ checkedIngredients[ingredient] }
-                  />
-                  <span>{ingredient}</span>
-                  <span>{measures[index]}</span>
-                </label>
-              );
-            }
-            return (sideTwo);
-          })}
+          {ingredients.map((ingredient, index) => (
+            <label
+              key={ ingredient }
+              htmlFor={ ingredient }
+              data-testid={ `${index}-ingredient-step` }
+              className="ingredient"
+            >
+              <input
+                id={ ingredient }
+                type="checkbox"
+                onChange={ handleCheckIngredient }
+                checked={ checkedIngredients[ingredient] }
+              />
+              <span>{ingredient}</span>
+              <span>{measures[index]}</span>
+            </label>
+          ))}
         </div>
       </SideBySideList>
 
