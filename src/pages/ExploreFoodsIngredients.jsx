@@ -2,23 +2,26 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState, useContext } from 'react';
 import getIngredients from '../services/getIngredientsAPI';
 import IngredientCard from '../components/ingredientCard';
-import { MAX_RENDER_INGREDIENTS } from '../data';
+import { MAX_RENDER_INGREDIENTS, WAIT_LOAD } from '../data';
 import recipesContext from '../context/recipesContext';
+import Loading from '../components/Loading';
 
 export default function ExploreFoodsIngredients({ history }) {
   const [ingredients, setIngredients] = useState();
-  const { setLoading } = useContext(recipesContext);
+  const { setLoading, loading } = useContext(recipesContext);
   useEffect(() => {
     if (typeof ingredients === 'undefined') {
       const ingredientsResult = async () => {
         setLoading(true);
         const result = await getIngredients();
         setIngredients(result.meals);
-        setLoading(false);
+        setInterval(() => setLoading(false), WAIT_LOAD);
       };
       ingredientsResult();
     }
   }, []);
+
+  if (loading) { return <Loading />; }
   return (
     <div>
       {typeof ingredients !== 'undefined'

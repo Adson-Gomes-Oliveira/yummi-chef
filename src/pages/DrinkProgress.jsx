@@ -8,11 +8,14 @@ import { ButtonRecipe } from '../styles/buttons';
 import { RecipesContainer, BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList } from '../styles/recipes';
 import { Title, Subtitle, Paragraph } from '../styles/index';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 function DrinkProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { updateRecipesInProgressDrinks, setLoading } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks,
+    setLoading, loading } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
   const [disableButton, setDisable] = useState(true);
@@ -24,7 +27,7 @@ function DrinkProgress() {
       setLoading(true);
       const res = await getDrinkRecipeAPI(id);
       setRecipe(res);
-      setLoading(false);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fetchDrinkDetails();
   }, [id]);
@@ -148,6 +151,7 @@ function DrinkProgress() {
     history.push('/done-recipes');
   };
 
+  if (loading) { return <Loading />; }
   return (
     <RecipesContainer>
       <BackgroundRecipe img={ recipe.strDrinkThumb } />

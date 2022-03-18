@@ -11,13 +11,15 @@ import { Carousel, RecipesContainer,
   BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
 import { Title, Subtitle, Paragraph } from '../styles/index';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 // const SLICE_VIDEO_ID = 11;
 const MAX_RENDER_DRINKS = 6;
 
 function FoodRecipe() {
   const { id } = useParams();
-  const { updateRecipesInProgressFood, setLoading } = useContext(recipesContext);
+  const { updateRecipesInProgressFood, setLoading, loading } = useContext(recipesContext);
   const history = useHistory();
   const [recipe, setRecipe] = useState({});
   const [drinks, setDrinks] = useState([]);
@@ -46,7 +48,7 @@ function FoodRecipe() {
       setLoading(true);
       const res = await getFoodRecipeAPI(id);
       setRecipe(res);
-      setLoading(false);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fethFoodDetails();
 
@@ -82,6 +84,7 @@ function FoodRecipe() {
       return acc;
     }, []);
 
+  if (loading) { return <Loading />; }
   return (
     <RecipesContainer>
       <BackgroundRecipe img={ recipe.strMealThumb } />

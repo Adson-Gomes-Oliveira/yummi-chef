@@ -10,12 +10,15 @@ import { Carousel, RecipesContainer,
   BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
 import { Title, Subtitle, Paragraph } from '../styles/index';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 const MAX_RENDER_DRINKS = 6;
 
 function DrinkRecipe() {
   const history = useHistory();
-  const { updateRecipesInProgressDrinks, setLoading } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks,
+    setLoading, loading } = useContext(recipesContext);
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [foods, setFoods] = useState([]);
@@ -44,7 +47,7 @@ function DrinkRecipe() {
       setLoading(true);
       const res = await getDrinkRecipeAPI(id);
       setRecipe(res);
-      setLoading(false);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fethDrinkRecipe();
 
@@ -80,6 +83,7 @@ function DrinkRecipe() {
       return acc;
     }, []);
 
+  if (loading) { return <Loading />; }
   return (
     <RecipesContainer>
       <BackgroundRecipe img={ recipe.strDrinkThumb } />

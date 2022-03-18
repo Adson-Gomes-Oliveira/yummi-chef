@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import { WAIT_LOAD } from '../data';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getDrinksCategoriesAPI from '../services/getDrinksCategoriesAPI';
 import getDrinksByCategoryAPI from '../services/getDrinksByCategoryAPI';
 import recipesContext from '../context/recipesContext';
 import { ListFoodsStyles, FoodCard,
   ButtonsDivStyled } from '../styles/foodsList';
+import Loading from '../components/Loading';
 
 function Drinks() {
-  const { filtredDrinks, searchDrinks, setLoading } = useContext(recipesContext);
+  const { filtredDrinks, searchDrinks, setLoading, loading } = useContext(recipesContext);
   const [drinks, setDrinks] = useState(filtredDrinks);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -18,7 +19,7 @@ function Drinks() {
     setLoading(true);
     const res = await getDrinksAPI();
     setDrinks(res);
-    setLoading(false);
+    setInterval(() => setLoading(false), WAIT_LOAD);
   };
 
   useEffect(() => {
@@ -51,8 +52,7 @@ function Drinks() {
     }
   };
 
-  if (drinks.length === 0) return <h3>Carrengando...</h3>;
-
+  if (loading) { return <Loading />; }
   return (
     <ListFoodsStyles>
       <ButtonsDivStyled>

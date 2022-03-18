@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import recipesContext from '../context/recipesContext';
 import getIngredients from '../services/getIngredientsDrinksAPI';
 import IngredientDrinkCard from '../components/ingredientDrinkCard';
-import { MAX_RENDER_INGREDIENTS } from '../data';
+import { MAX_RENDER_INGREDIENTS, WAIT_LOAD } from '../data';
+import Loading from '../components/Loading';
 
 export default function ExploreDrinkIngredients({ history }) {
   const [ingredients, setIngredients] = useState();
-  const { setLoading } = useContext(recipesContext);
+  const { setLoading, loading } = useContext(recipesContext);
 
   useEffect(() => {
     if (typeof ingredients === 'undefined') {
@@ -15,11 +16,13 @@ export default function ExploreDrinkIngredients({ history }) {
         setLoading(true);
         const result = await getIngredients();
         setIngredients(result.drinks);
-        setLoading(false);
+        setInterval(() => setLoading(false), WAIT_LOAD);
       };
       ingredientsResult();
     }
   }, []);
+
+  if (loading) { return <Loading />; }
   return (
     <div>
       {typeof ingredients !== 'undefined'

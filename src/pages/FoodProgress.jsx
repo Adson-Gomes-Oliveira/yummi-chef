@@ -9,11 +9,13 @@ import { ButtonRecipe } from '../styles/buttons';
 import { RecipesContainer, BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList } from '../styles/recipes';
 import { Title, Subtitle, Paragraph } from '../styles/index';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 function FoodProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { updateRecipesInProgressFood, setLoading } = useContext(recipesContext);
+  const { updateRecipesInProgressFood, setLoading, loading } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({ default: false });
   const [disableButton, setDisable] = useState(true);
@@ -25,7 +27,7 @@ function FoodProgress() {
       setLoading(true);
       const res = await getFoodRecipeAPI(id);
       setRecipe(res);
-      setLoading(false);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fetchFoodDetails();
   }, [id]);
@@ -148,6 +150,7 @@ function FoodProgress() {
     history.push('/done-recipes');
   };
 
+  if (loading) { return <Loading />; }
   return (
     <RecipesContainer>
       <BackgroundRecipe img={ recipe.strMealThumb } />

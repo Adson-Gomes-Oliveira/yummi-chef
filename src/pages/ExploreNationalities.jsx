@@ -4,13 +4,16 @@ import recipesContext from '../context/recipesContext';
 import getNationalitiesAPI from '../services/getNationalitiesAPI';
 import getFoodsByNationalitiesAPI from '../services/getFoodsByNationalitiesAPI';
 import getFoodsAPI from '../services/getFoodsAPI';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 export default function ExploreNationalities() {
   const [foodNationalites, setNationalities] = useState({
     foodFiltred: [],
     nationalities: [],
   });
-  const { setLoading } = useContext(recipesContext);
+  const { nationalities, foodFiltred } = foodNationalites;
+  const { setLoading, loading } = useContext(recipesContext);
   useEffect(() => {
     const fetchNationalities = async () => {
       setLoading(true);
@@ -24,7 +27,7 @@ export default function ExploreNationalities() {
         ...prevState,
         foodFiltred: res2,
       }));
-      setLoading(false);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fetchNationalities();
   }, []);
@@ -43,7 +46,8 @@ export default function ExploreNationalities() {
       }));
     }
   };
-  const { nationalities, foodFiltred } = foodNationalites;
+
+  if (loading) { return <Loading />; }
   return (
     <section>
       <select onChange={ handleClick } data-testid="explore-by-nationality-dropdown">

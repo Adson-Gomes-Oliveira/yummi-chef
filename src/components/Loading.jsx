@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LoadingProgress, LoadingArt,
   LoadingQuotes, LoadingLogo } from '../styles/loading';
 import { QUOTES_DATA } from '../data';
-import logoHeader from '../images/logoHeader.svg';
+import logoHeader2 from '../images/logoHeader2.svg';
 
 function Loading() {
   const [quote, setQuote] = useState('...');
@@ -14,7 +14,7 @@ function Loading() {
 
   return (
     <LoadingProgress>
-      <LoadingLogo src={ logoHeader } alt="logo-app" />
+      <LoadingLogo src={ logoHeader2 } alt="logo-app" />
       <LoadingQuotes>
         {quote}
       </LoadingQuotes>

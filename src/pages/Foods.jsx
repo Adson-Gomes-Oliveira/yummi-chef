@@ -51,7 +51,8 @@ function Foods() {
     }
   };
 
-  return loading ? <Loading /> : (
+  if (loading) { return <Loading />; }
+  return (
     <ListFoodsStyles>
       <ButtonsDivStyled>
         <button
