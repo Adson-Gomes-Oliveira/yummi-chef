@@ -14,7 +14,9 @@
 @font-face {
   font-family: bebas;
   src: url('./fonts/Bebas-Regular.ttf');
+}
 
+@font-face {
   font-family: leChant;
   src: url('./fonts/Le\ chant\ des\ Albatros.ttf');
 }
