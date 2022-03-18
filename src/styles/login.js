@@ -5,6 +5,7 @@ export const LoginPage = styled.section`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  margin-bottom: -90px;
 
   img {
     height: auto;

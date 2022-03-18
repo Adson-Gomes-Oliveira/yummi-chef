@@ -16,6 +16,7 @@ function RecipesProvider({ children }) {
   const [searchDrinks, setSearchDrinks] = useState([]);
   const [radioInput, setRadioInput] = useState('');
   const [inputSearch, setInputSearch] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const openOrCloseSearchInput = () => {
     setOpened((prevState) => ({ isOpened: !prevState.isOpened }));
@@ -115,14 +116,15 @@ function RecipesProvider({ children }) {
     case 'Ingredient': {
       const searchIngredients = await searchByIngredientAPI(inputSearch);
       updateSearchFoods(searchIngredients);
-
+      setLoading(false);
       break;
     }
 
     case 'Name': {
+      setLoading(true);
       const searchName = await searchByNameAPI(inputSearch);
       updateSearchFoods(searchName);
-
+      setLoading(false);
       break;
     }
 
@@ -130,8 +132,10 @@ function RecipesProvider({ children }) {
       if (inputSearch.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       } else if (inputSearch.length === 1) {
+        setLoading(true);
         const searchByLetter = await searchByFirstLetterAPI(inputSearch);
         updateSearchFoods(searchByLetter);
+        setLoading(false);
       }
 
       break;
@@ -144,21 +148,27 @@ function RecipesProvider({ children }) {
   async function searchBarDrinks() {
     switch (radioInput) {
     case 'Ingredient': {
+      setLoading(true);
       const IngredientsDrink = await searchByDrinksIngredient(inputSearch);
       updateSearchDrinks(IngredientsDrink);
+      setLoading(false);
       break;
     }
     case 'Name': {
+      setLoading(true);
       const drinksName = await searchByDrinksName(inputSearch);
       updateSearchDrinks(drinksName);
+      setLoading(false);
       break;
     }
     case FIRST_LETTER: {
       if (inputSearch.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       } else if (inputSearch.length === 1) {
+        setLoading(true);
         const firstLetterDrink = await searchByDrinksFirstLetter(inputSearch);
         updateSearchDrinks(firstLetterDrink);
+        setLoading(false);
       }
       break;
     }
@@ -167,9 +177,12 @@ function RecipesProvider({ children }) {
       return null;
     }
   }
+
   return (
     <recipesContext.Provider
       value={ {
+        loading,
+        setLoading,
         radioInput,
         setRadioInput,
         searchBarDrinks,

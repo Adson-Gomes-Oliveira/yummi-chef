@@ -10,12 +10,15 @@ import { Carousel, RecipesContainer,
   BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList, CarouselItem } from '../styles/recipes';
 import { Title, Subtitle, Paragraph } from '../styles/index';
+import Loading from '../components/Loading';
+import { WAIT_LOAD } from '../data';
 
 const MAX_RENDER_DRINKS = 6;
 
 function DrinkRecipe() {
   const history = useHistory();
-  const { updateRecipesInProgressDrinks } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks,
+    setLoading, loading } = useContext(recipesContext);
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [foods, setFoods] = useState([]);
@@ -41,8 +44,10 @@ function DrinkRecipe() {
 
   useEffect(() => {
     const fethDrinkRecipe = async () => {
+      setLoading(true);
       const res = await getDrinkRecipeAPI(id);
       setRecipe(res);
+      setInterval(() => setLoading(false), WAIT_LOAD);
     };
     fethDrinkRecipe();
 
@@ -78,6 +83,7 @@ function DrinkRecipe() {
       return acc;
     }, []);
 
+  if (loading) { return <Loading />; }
   return (
     <RecipesContainer>
       <BackgroundRecipe img={ recipe.strDrinkThumb } />
@@ -103,40 +109,15 @@ function DrinkRecipe() {
 
       <SideBySideList>
         <div>
-          {ingredients.map((ingredient, index) => {
-            const divisorNumber = parseInt(ingredients.length / 2, 10);
-            let sideOne;
-            if (index < divisorNumber) {
-              sideOne = (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  <span>{ingredient}</span>
-                  <span>{measures[index]}</span>
-                </li>
-              );
-            }
-            return (sideOne);
-          })}
-        </div>
-        <div>
-          {ingredients.map((ingredient, index) => {
-            const divisorNumber = parseInt(ingredients.length / 2, 10);
-            let sideTwo;
-            if (index > divisorNumber) {
-              sideTwo = (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  <span>{ingredient}</span>
-                  <span>{measures[index]}</span>
-                </li>
-              );
-            }
-            return (sideTwo);
-          })}
+          {ingredients.map((ingredient, index) => (
+            <li
+              key={ ingredient }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              <span>{ingredient}</span>
+              <span>{measures[index]}</span>
+            </li>
+          ))}
         </div>
       </SideBySideList>
 

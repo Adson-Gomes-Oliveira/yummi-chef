@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import recipesContext from '../context/recipesContext';
 import logoHeader from '../images/logoHeader.svg';
 import { FIRST_LETTER } from '../data';
@@ -11,6 +11,7 @@ import { ButtonSearch } from '../styles/buttons';
 
 export default function Header({ name, isSearched,
   customLogoBoxSize, customLogoFontSize, isBack }) {
+  const history = useHistory();
   const { isOpenedSearch: { isOpened },
     openOrCloseSearchInput, inputSearch, setInputSearch, searchBarDrinks,
     searchBarFoods, radioInput, setRadioInput } = useContext(recipesContext);
@@ -24,6 +25,12 @@ export default function Header({ name, isSearched,
     <MainHeader>
       <FirstSection>
         {isBack ? (
+          <button type="button" onClick={ () => history.goBack() }>
+            <HeaderIcons className="material-icons-outlined">
+              arrow_back_ios
+            </HeaderIcons>
+          </button>
+        ) : (
           <Link to="/profile">
             <HeaderIcons
               className="material-icons-outlined"
@@ -32,11 +39,8 @@ export default function Header({ name, isSearched,
             >
               account_circle
             </HeaderIcons>
-          </Link>)
-          : (
-            <span className="material-icons-outlined">
-              arrow_back_ios
-            </span>)}
+          </Link>
+        )}
 
         <MainLogo size={ customLogoBoxSize } fontSize={ customLogoFontSize }>
           <h2 data-testid="page-title">{ name }</h2>
@@ -46,27 +50,27 @@ export default function Header({ name, isSearched,
           />
         </MainLogo>
 
-        {isSearched
-          ? (
-            <button type="button" onClick={ openOrCloseSearchInput }>
-              <HeaderIcons
-                className="material-icons-outlined"
-                data-testid="search-top-btn"
-                alt="search icon"
-              >
-                search
-              </HeaderIcons>
-            </button>)
-          : (
-            <Link to="/profile">
-              <HeaderIcons
-                className="material-icons-outlined"
-                data-testid="profile-top-btn"
-                alt="profile icon"
-              >
-                account_circle
-              </HeaderIcons>
-            </Link>)}
+        {isSearched ? (
+          <button type="button" onClick={ openOrCloseSearchInput }>
+            <HeaderIcons
+              className="material-icons-outlined"
+              data-testid="search-top-btn"
+              alt="search icon"
+            >
+              search
+            </HeaderIcons>
+          </button>
+        ) : (
+          <Link to="/profile">
+            <HeaderIcons
+              className="material-icons-outlined"
+              data-testid="profile-top-btn"
+              alt="profile icon"
+            >
+              account_circle
+            </HeaderIcons>
+          </Link>)}
+
       </FirstSection>
 
       <SecondSection>

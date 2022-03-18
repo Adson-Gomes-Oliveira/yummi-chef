@@ -27,7 +27,7 @@ function App() {
         path="/foods/:id"
         render={ () => (
           <>
-            <Header name="Recipe" isSearched={ false } />
+            <Header name="Recipe" isBack />
             <FoodRecipe />
           </>
         ) }
@@ -37,7 +37,7 @@ function App() {
         path="/drinks/:id"
         render={ () => (
           <>
-            <Header name="Recipe" isSearched={ false } />
+            <Header name="Recipe" isBack />
             <DrinkRecipe />
           </>
         ) }
@@ -69,7 +69,7 @@ function App() {
         path="/explore"
         render={ () => (
           <>
-            <Header name="Explore" isSearched={ false } isBack={ false } />
+            <Header name="Explore" isSearched />
             <Explore />
             <BottomMenu />
           </>) }
@@ -81,7 +81,7 @@ function App() {
           <>
             <Header
               name="Explore Foods"
-              isSearched={ false }
+              isBack
               customLogoBoxSize="15rem"
             />
             <ExploreFoods />
@@ -95,7 +95,7 @@ function App() {
           <>
             <Header
               name="Explore Drinks"
-              isSearched={ false }
+              isBack
               customLogoBoxSize="15rem"
               customLogoFontSize="2.6rem"
             />
@@ -109,7 +109,7 @@ function App() {
           <>
             <Header
               name="Explore Ingredients"
-              isSearched={ false }
+              isBack
               customLogoBoxSize="15rem"
               customLogoFontSize="2.3rem"
             />
@@ -123,7 +123,7 @@ function App() {
           <>
             <Header
               name="Explore Ingredients"
-              isSearched={ false }
+              isBack
               alt
               customLogoBoxSize="15rem"
               customLogoFontSize="2.3rem"
@@ -151,7 +151,7 @@ function App() {
         path="/profile"
         render={ () => (
           <>
-            <Header name="Profile" isSearched={ false } />
+            <Header name="Profile" isBack />
             <Profile />
             <BottomMenu />
           </>
@@ -161,7 +161,7 @@ function App() {
         path="/done-recipes"
         render={ () => (
           <>
-            <Header name="Done Recipes" isSearched={ false } customLogoBoxSize="16rem" />
+            <Header name="Done Recipes" isBack customLogoBoxSize="16rem" />
             <DoneRecipes />
             {/* <BottomMenu /> */}
           </>
@@ -173,7 +173,7 @@ function App() {
           <>
             <Header
               name="Favorite Recipes"
-              isSearched={ false }
+              isBack
               customLogoBoxSize="14.8rem"
               customLogoFontSize="2.5rem"
             />

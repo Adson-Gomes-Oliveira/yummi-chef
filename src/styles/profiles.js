@@ -8,8 +8,8 @@ const ProfileSections = styled.section`
 
     span {
         color: var(--base-color);
-        font-size: 2rem;
-        margin-bottom: 2.5rem;
+        font-size: 1.8rem;
+        margin: 2.5rem;
     }
 
     div {
@@ -18,13 +18,13 @@ const ProfileSections = styled.section`
     }
     
     button {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         color: white;
         margin-bottom: var(--spacing-scale-4x);
         background-color: var(--base-color);
         border: none;
         border-radius: 10px;
-        min-width: 22rem;
+        min-width: 20rem;
     }
 `;
 
