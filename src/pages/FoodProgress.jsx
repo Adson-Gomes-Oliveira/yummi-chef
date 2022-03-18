@@ -13,7 +13,7 @@ import { Title, Subtitle, Paragraph } from '../styles/index';
 function FoodProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { updateRecipesInProgressFood } = useContext(recipesContext);
+  const { updateRecipesInProgressFood, setLoading } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({ default: false });
   const [disableButton, setDisable] = useState(true);
@@ -22,8 +22,10 @@ function FoodProgress() {
 
   useEffect(() => { //  Gets the started recipe from API
     const fetchFoodDetails = async () => {
+      setLoading(true);
       const res = await getFoodRecipeAPI(id);
       setRecipe(res);
+      setLoading(false);
     };
     fetchFoodDetails();
   }, [id]);

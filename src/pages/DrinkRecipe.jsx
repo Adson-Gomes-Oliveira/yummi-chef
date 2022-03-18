@@ -15,7 +15,7 @@ const MAX_RENDER_DRINKS = 6;
 
 function DrinkRecipe() {
   const history = useHistory();
-  const { updateRecipesInProgressDrinks } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks, setLoading } = useContext(recipesContext);
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [foods, setFoods] = useState([]);
@@ -41,8 +41,10 @@ function DrinkRecipe() {
 
   useEffect(() => {
     const fethDrinkRecipe = async () => {
+      setLoading(true);
       const res = await getDrinkRecipeAPI(id);
       setRecipe(res);
+      setLoading(false);
     };
     fethDrinkRecipe();
 
