@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import recipesContext from './recipesContext';
-import searchByFirstLetterAPI from '../services/seacrhByFirstLetterAPI';
-import searchByIngredientAPI from '../services/searchByIngredientAPI';
-import searchByNameAPI from '../services/searchByNameAPI';
+import { searchByIngredientAPI, searchByFirstLetterAPI,
+  searchByNameAPI } from '../services/searchByFoodsAPI';
 import { searchByDrinksIngredient, searchByDrinksName,
   searchByDrinksFirstLetter } from '../services/searchDrinksAPI';
 import { FIRST_LETTER } from '../data';
