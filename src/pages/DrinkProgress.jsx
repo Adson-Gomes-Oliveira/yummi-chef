@@ -12,33 +12,49 @@ import { Title, Subtitle, Paragraph } from '../styles/index';
 function DrinkProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { updateRecipesInProgressDrinks } = useContext(recipesContext);
+  const { updateRecipesInProgressDrinks, setLoading } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState({});
   const [disableButton, setDisable] = useState(true);
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
 
-  const ingredients = Object.entries(recipe)
-    .reduce((acc, ingredient) => {
-      if (ingredient[0].includes('strIngredient') && ingredient[1]) {
-        acc.push(ingredient[1]);
-      }
-      return acc;
-    }, []);
+  useEffect(() => { //  Gets the started recipe from API
+    const fetchDrinkDetails = async () => {
+      setLoading(true);
+      const res = await getDrinkRecipeAPI(id);
+      setRecipe(res);
+      setLoading(false);
+    };
+    fetchDrinkDetails();
+  }, [id]);
 
-  useEffect(() => {
-    const verify = Object.values(checkedIngredients);
-    setDisable(true);
-    if (!verify.includes(false)) {
-      setDisable(false);
-    }
-  }, [checkedIngredients]);
+  useEffect(() => { //  Create the ingredients and measures arrays from API data
+    const ingredientsArray = Object.entries(recipe)
+      .reduce((acc, ingredient) => {
+        if (ingredient[0].includes('strIngredient') && ingredient[1]) {
+          acc.push(ingredient[1]);
+        }
+        return acc;
+      }, []);
+
+    const measuresArray = Object.entries(recipe)
+      .reduce((acc, measure) => {
+        if (measure[0].includes('strMeasure') && measure[1]) {
+          acc.push(measure[1]);
+        }
+        return acc;
+      }, []);
+
+    setIngredients(ingredientsArray);
+    setMeasures(measuresArray);
+  }, [recipe]);
 
   useEffect(() => { // Recover previous checked ingredients
     const initialCheckedState = {};
     ingredients.forEach((ing) => {
       initialCheckedState[ing] = false;
     });
-    console.log(initialCheckedState);
     setChecked(initialCheckedState);
 
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -51,26 +67,27 @@ function DrinkProgress() {
     }
     const recipeCooking = recipesInProgress.cocktails[id];
     const isChecked = recipeCooking.checkedIngredients;
-    console.log(isChecked);
     setChecked(isChecked);
   }, [recipe]);
 
-  useEffect(() => {
-    const fetchDrinkDetails = async () => {
-      const res = await getDrinkRecipeAPI(id);
-      setRecipe(res);
-    };
-    fetchDrinkDetails();
-  }, [id]);
+  useEffect(() => { // Verify if all ingredients are checked to control the disableButton...
+    const verify = Object.values(checkedIngredients);
+    if (verify.length > 0) {
+      setDisable(false);
+      if (verify.includes(false)) {
+        console.log('cheguei no if');
+        setDisable(true);
+      }
+    }
+  }, [checkedIngredients]);
 
-  const handleCheckIngredient = ({ target }) => {
+  const handleCheckIngredient = ({ target }) => { // Set new ingredients already checked in the state and save these imgredients in the storage
     const { checked, id: name } = target;
-    console.log(name, checked);
     const recipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const getRecipe = recipesInProgress.cocktails[id].checkedIngredients;
     setChecked({ ...checkedIngredients, [name]: checked });
 
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ // Set the checked ingredient to the localStorage
       ...recipesInProgress,
       cocktails: {
         ...recipesInProgress.cocktails,
@@ -85,7 +102,7 @@ function DrinkProgress() {
     }));
   };
 
-  const handleClickToStopRecipe = () => {
+  const handleClickToStopRecipe = () => { // Stop the recipe and create the doneRecipes localStorage key
     const date = new Date();
     // This reference was used to do the date function https://www.horadecodar.com.br/2021/04/03/como-pegar-a-data-atual-com-javascript/
     const fullDate = {
@@ -130,14 +147,6 @@ function DrinkProgress() {
     ]));
     history.push('/done-recipes');
   };
-
-  const measures = Object.entries(recipe)
-    .reduce((acc, measure) => {
-      if (measure[0].includes('strMeasure') && measure[1]) {
-        acc.push(measure[1]);
-      }
-      return acc;
-    }, []);
 
   return (
     <RecipesContainer>

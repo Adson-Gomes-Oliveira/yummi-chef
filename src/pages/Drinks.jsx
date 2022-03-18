@@ -9,14 +9,16 @@ import { ListFoodsStyles, FoodCard,
   ButtonsDivStyled } from '../styles/foodsList';
 
 function Drinks() {
-  const { filtredDrinks, searchDrinks } = useContext(recipesContext);
+  const { filtredDrinks, searchDrinks, setLoading } = useContext(recipesContext);
   const [drinks, setDrinks] = useState(filtredDrinks);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const fetchDrinks = async () => {
+    setLoading(true);
     const res = await getDrinksAPI();
     setDrinks(res);
+    setLoading(false);
   };
 
   useEffect(() => {

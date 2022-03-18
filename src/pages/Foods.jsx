@@ -1,22 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
-
 import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 import getFoodsAPI from '../services/getFoodsAPI';
 import getFoodsCategoriesAPI from '../services/getFoodsCategoriesAPI';
 import getFoodsByCategoryAPI from '../services/getFoodsByCategoryAPI';
 import recipesContext from '../context/recipesContext';
 import { ListFoodsStyles, FoodCard,
   ButtonsDivStyled } from '../styles/foodsList';
+import { WAIT_LOAD } from '../data';
 
 function Foods() {
-  const { filtredFoods, searchFoods } = useContext(recipesContext);
+  const { filtredFoods, searchFoods, setLoading, loading } = useContext(recipesContext);
   const [foods, setFoods] = useState(filtredFoods);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const fetchFoods = async () => {
+    setLoading(true);
     const res = await getFoodsAPI();
     setFoods(res);
+    setInterval(() => setLoading(false), WAIT_LOAD);
   };
 
   useEffect(() => {
@@ -48,9 +51,7 @@ function Foods() {
     }
   };
 
-  if (foods.length === 0) return <h3>Carrengando...</h3>;
-
-  return (
+  return loading ? <Loading /> : (
     <ListFoodsStyles>
       <ButtonsDivStyled>
         <button

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import recipesContext from '../context/recipesContext';
 import getRandomFoodAPI from '../services/getRandomFoodAPI';
 
 export default function ExploreFoods() {
   const history = useHistory();
+  const { setLoading } = useContext(recipesContext);
   const handleClick = async () => {
     try {
+      setLoading(true);
       const res = await getRandomFoodAPI();
-      console.log(res);
       history.push(`/foods/${res.idMeal}`);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }

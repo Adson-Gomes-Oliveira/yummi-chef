@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import recipesContext from '../context/recipesContext';
 import getNationalitiesAPI from '../services/getNationalitiesAPI';
 import getFoodsByNationalitiesAPI from '../services/getFoodsByNationalitiesAPI';
 import getFoodsAPI from '../services/getFoodsAPI';
@@ -9,8 +10,10 @@ export default function ExploreNationalities() {
     foodFiltred: [],
     nationalities: [],
   });
+  const { setLoading } = useContext(recipesContext);
   useEffect(() => {
     const fetchNationalities = async () => {
+      setLoading(true);
       const res = await getNationalitiesAPI();
       setNationalities((prevState) => ({
         ...prevState,
@@ -21,6 +24,7 @@ export default function ExploreNationalities() {
         ...prevState,
         foodFiltred: res2,
       }));
+      setLoading(false);
     };
     fetchNationalities();
   }, []);
