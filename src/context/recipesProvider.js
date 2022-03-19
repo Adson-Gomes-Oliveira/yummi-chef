@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import recipesContext from './recipesContext';
-import searchByFirstLetterAPI from '../services/seacrhByFirstLetterAPI';
-import searchByIngredientAPI from '../services/searchByIngredientAPI';
-import searchByNameAPI from '../services/searchByNameAPI';
+import { searchByIngredientAPI, searchByFirstLetterAPI,
+  searchByNameAPI } from '../services/searchByFoodsAPI';
 import { searchByDrinksIngredient, searchByDrinksName,
   searchByDrinksFirstLetter } from '../services/searchDrinksAPI';
-import { FIRST_LETTER } from '../data';
+import { FIRST_LETTER, ALERT_MESSAGE } from '../data';
 
 function RecipesProvider({ children }) {
   const [isOpenedSearch, setOpened] = useState({ isOpened: false });
@@ -114,17 +113,25 @@ function RecipesProvider({ children }) {
   async function searchBarFoods() {
     switch (radioInput) {
     case 'Ingredient': {
-      const searchIngredients = await searchByIngredientAPI(inputSearch);
-      updateSearchFoods(searchIngredients);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const searchIngredients = await searchByIngredientAPI(inputSearch);
+        updateSearchFoods(searchIngredients);
+        setLoading(false);
+      } catch {
+        global.alert(ALERT_MESSAGE);
+      }
       break;
     }
-
     case 'Name': {
-      setLoading(true);
-      const searchName = await searchByNameAPI(inputSearch);
-      updateSearchFoods(searchName);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const searchName = await searchByNameAPI(inputSearch);
+        updateSearchFoods(searchName);
+        setLoading(false);
+      } catch {
+        global.alert(ALERT_MESSAGE);
+      }
       break;
     }
 
@@ -132,10 +139,14 @@ function RecipesProvider({ children }) {
       if (inputSearch.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       } else if (inputSearch.length === 1) {
-        setLoading(true);
-        const searchByLetter = await searchByFirstLetterAPI(inputSearch);
-        updateSearchFoods(searchByLetter);
-        setLoading(false);
+        try {
+          setLoading(true);
+          const searchByLetter = await searchByFirstLetterAPI(inputSearch);
+          updateSearchFoods(searchByLetter);
+          setLoading(false);
+        } catch {
+          global.alert(ALERT_MESSAGE);
+        }
       }
 
       break;
