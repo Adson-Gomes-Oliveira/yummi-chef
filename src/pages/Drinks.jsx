@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { WAIT_LOAD } from '../data';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getDrinksCategoriesAPI from '../services/getDrinksCategoriesAPI';
@@ -11,6 +11,7 @@ import Loading from '../components/Loading';
 
 function Drinks() {
   const { filtredDrinks, searchDrinks, setLoading, loading } = useContext(recipesContext);
+  const history = useHistory();
   const [drinks, setDrinks] = useState(filtredDrinks);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -23,12 +24,13 @@ function Drinks() {
   };
 
   useEffect(() => {
-    if (filtredDrinks.length === 0 && searchDrinks.length === 0) {
-      // (!filtredDrinks.length) {
+    if (filtredDrinks.length === 0 && searchDrinks && searchDrinks.length === 0) {
       fetchDrinks();
     }
-    if (searchDrinks.length > 0) {
-      setDrinks(searchDrinks);
+    if (searchDrinks && searchDrinks.length > 1) setDrinks(searchDrinks);
+
+    if (searchDrinks && searchDrinks.length === 1) {
+      history.push(`/drinks/${searchDrinks[0].idDrink}`);
     }
 
     const fetchDrinksCategories = async () => {

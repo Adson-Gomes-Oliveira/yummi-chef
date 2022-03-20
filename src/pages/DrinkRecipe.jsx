@@ -134,6 +134,7 @@ function DrinkRecipe() {
               <img
                 src={ food.strMealThumb }
                 alt={ food.strMeal }
+                data-testid="recipe-photo"
               />
               <span
                 data-testid={ `${index}-recomendation-title` }

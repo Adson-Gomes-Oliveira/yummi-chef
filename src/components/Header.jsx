@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import recipesContext from '../context/recipesContext';
 import logoHeader from '../images/logoHeader.svg';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 import { FIRST_LETTER } from '../data';
 import { FirstSection, HeaderIcons,
   MainHeader, MainLogo, SearchArea, SecondSection,
@@ -36,6 +38,7 @@ export default function Header({ name, isSearched,
               className="material-icons-outlined"
               data-testid="profile-top-btn"
               alt="profile icon"
+              src={ profileIcon }
             >
               account_circle
             </HeaderIcons>
@@ -56,6 +59,7 @@ export default function Header({ name, isSearched,
               className="material-icons-outlined"
               data-testid="search-top-btn"
               alt="search icon"
+              src={ searchIcon }
             >
               search
             </HeaderIcons>
@@ -66,6 +70,7 @@ export default function Header({ name, isSearched,
               className="material-icons-outlined"
               data-testid="profile-top-btn"
               alt="profile icon"
+              src={ profileIcon }
             >
               account_circle
             </HeaderIcons>

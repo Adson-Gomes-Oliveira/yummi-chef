@@ -17,6 +17,7 @@ import ExploreNationalities from './pages/ExploreNationalities';
 import FoodProgress from './pages/FoodProgress';
 import DrinkProgress from './pages/DrinkProgress';
 import DoneRecipes from './pages/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
@@ -25,26 +26,17 @@ function App() {
       <Route
         exact
         path="/foods/:id"
-        render={ () => (
-          <>
-            <Header name="Recipe" isBack />
-            <FoodRecipe />
-          </>
-        ) }
+        render={ () => <FoodRecipe /> }
       />
       <Route
         exact
         path="/drinks/:id"
-        render={ () => (
-          <>
-            <Header name="Recipe" isBack />
-            <DrinkRecipe />
-          </>
-        ) }
+        render={ () => <DrinkRecipe /> }
       />
-      <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
-      <Route path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
+      <Route exact path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
+      <Route exact path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
       <Route
+        exact
         path="/foods"
         render={ () => (
           <>
@@ -55,6 +47,7 @@ function App() {
         ) }
       />
       <Route
+        exact
         path="/drinks"
         render={ () => (
           <>
@@ -69,7 +62,7 @@ function App() {
         path="/explore"
         render={ () => (
           <>
-            <Header name="Explore" isSearched />
+            <Header name="Explore" />
             <Explore />
             <BottomMenu />
           </>) }
@@ -177,6 +170,7 @@ function App() {
               customLogoBoxSize="14.8rem"
               customLogoFontSize="2.5rem"
             />
+            <FavoriteRecipes />
             {/* <BottomMenu /> */}
           </>
         ) }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import ReactPlayer from 'react-player';
+import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+// import ReactPlayer from 'react-player';
 import recipesContext from '../context/recipesContext';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
@@ -18,9 +18,9 @@ import { WAIT_LOAD } from '../data';
 const MAX_RENDER_DRINKS = 6;
 
 function FoodRecipe() {
-  const { id } = useParams();
-  const { updateRecipesInProgressFood, setLoading, loading } = useContext(recipesContext);
   const history = useHistory();
+  const { updateRecipesInProgressFood, setLoading, loading } = useContext(recipesContext);
+  const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [drinks, setDrinks] = useState([]);
 
@@ -124,7 +124,14 @@ function FoodRecipe() {
 
       <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
 
-      <ReactPlayer width="100%" height="40vh" url={ recipe.strYoutube } />
+      {/* <ReactPlayer
+        data-testid="video"
+        width="100%"
+        height="40vh"
+        light
+        url={ recipe.strYoutube }
+      /> */}
+      <span data-testid="video">aa</span>
 
       <Carousel>
         {
@@ -137,6 +144,7 @@ function FoodRecipe() {
               <img
                 src={ drink.strDrinkThumb }
                 alt={ drink.strDrink }
+                data-testid="recipe-photo"
               />
               <span
                 data-testid={ `${index}-recomendation-title` }
