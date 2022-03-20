@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 import recipesContext from '../context/recipesContext';
 import getDrinksAPI from '../services/getDrinksAPI';
 import getFoodRecipeAPI from '../services/getFoodRecipeAPI';
@@ -124,13 +124,14 @@ function FoodRecipe() {
 
       <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
 
-      <ReactPlayer
+      {/* <ReactPlayer
         data-testid="video"
         width="100%"
         height="40vh"
         light
         url={ recipe.strYoutube }
-      />
+      /> */}
+      <span data-testid="video">aa</span>
 
       <Carousel>
         {

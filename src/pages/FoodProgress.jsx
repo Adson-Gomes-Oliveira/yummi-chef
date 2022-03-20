@@ -14,7 +14,8 @@ import { WAIT_LOAD } from '../data';
 function FoodProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { updateRecipesInProgressFood, setLoading } = useContext(recipesContext);
+  const { updateRecipesInProgressFood,
+    setLoading } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setChecked] = useState([]);
   const [disableButton, setDisable] = useState(true);
@@ -74,9 +75,8 @@ function FoodProgress() {
 
   useEffect(() => { // Verify if all ingredients are checked to control the disableButton...
     const verify = Object.values(checkedIngredients);
-    const numberOfIngredients = ingredients.length;
 
-    if (verify.length >= numberOfIngredients) {
+    if (verify.length > 0) {
       setDisable(false);
       if (verify.includes(false)) {
         console.log('cheguei no if');

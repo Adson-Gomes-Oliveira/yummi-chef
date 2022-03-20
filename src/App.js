@@ -33,9 +33,10 @@ function App() {
         path="/drinks/:id"
         render={ () => <DrinkRecipe /> }
       />
-      <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
-      <Route path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
+      <Route exact path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
+      <Route exact path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
       <Route
+        exact
         path="/foods"
         render={ () => (
           <>
@@ -46,6 +47,7 @@ function App() {
         ) }
       />
       <Route
+        exact
         path="/drinks"
         render={ () => (
           <>
