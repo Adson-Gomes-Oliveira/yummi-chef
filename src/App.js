@@ -17,6 +17,7 @@ import ExploreNationalities from './pages/ExploreNationalities';
 import FoodProgress from './pages/FoodProgress';
 import DrinkProgress from './pages/DrinkProgress';
 import DoneRecipes from './pages/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
@@ -176,7 +177,9 @@ function App() {
               isBack
               customLogoBoxSize="14.8rem"
               customLogoFontSize="2.5rem"
+              isSearched
             />
+            <FavoriteRecipes />
             {/* <BottomMenu /> */}
           </>
         ) }

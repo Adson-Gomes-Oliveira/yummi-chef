@@ -124,7 +124,7 @@ function FoodRecipe() {
 
       <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
 
-      <ReactPlayer width="100%" height="40vh" url={ recipe.strYoutube } />
+      <ReactPlayer width="100%" height="40vh" light url={ recipe.strYoutube } />
 
       <Carousel>
         {
