@@ -65,10 +65,13 @@ function FoodProgress() {
     ingredients.forEach((ing) => {
       initialCheckedState[ing] = false;
     });
-    console.log(initialCheckedState);
 
+    const isCheckedValues = Object.values(isChecked);
+    if (isCheckedValues.length !== 0) {
+      setChecked(initialCheckedState);
+      return setChecked(isChecked);
+    }
     setChecked(initialCheckedState);
-    setChecked(isChecked);
   }, [recipe, ingredients]);
 
   useEffect(() => { // Verify if all ingredients are checked to control the disableButton...
@@ -77,12 +80,12 @@ function FoodProgress() {
 
     if (verify.length >= numberOfIngredients) {
       setDisable(false);
+      console.log(verify);
       if (verify.includes(false)) {
-        console.log('cheguei no if');
         setDisable(true);
       }
     }
-  }, [checkedIngredients]);
+  }, [checkedIngredients, ingredients]);
 
   const handleCheckIngredient = ({ target }) => { // Set new ingredients already checked in the state and save these imgredients in the storage
     const { checked, id: name } = target;

@@ -67,8 +67,12 @@ function DrinkProgress() {
       initialCheckedState[ing] = false;
     });
 
+    const isCheckedValues = Object.values(isChecked);
+    if (isCheckedValues.length !== 0) {
+      setChecked(initialCheckedState);
+      return setChecked(isChecked);
+    }
     setChecked(initialCheckedState);
-    setChecked(isChecked);
   }, [recipe, ingredients]);
 
   useEffect(() => { // Verify if all ingredients are checked to control the disableButton...
