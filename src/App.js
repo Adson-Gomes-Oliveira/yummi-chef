@@ -26,22 +26,12 @@ function App() {
       <Route
         exact
         path="/foods/:id"
-        render={ () => (
-          <>
-            <Header name="Recipe" isBack />
-            <FoodRecipe />
-          </>
-        ) }
+        render={ () => <FoodRecipe /> }
       />
       <Route
         exact
         path="/drinks/:id"
-        render={ () => (
-          <>
-            <Header name="Recipe" isBack />
-            <DrinkRecipe />
-          </>
-        ) }
+        render={ () => <DrinkRecipe /> }
       />
       <Route path="/foods/:id/in-progress" render={ () => <FoodProgress /> } />
       <Route path="/drinks/:id/in-progress" render={ () => <DrinkProgress /> } />
@@ -70,7 +60,7 @@ function App() {
         path="/explore"
         render={ () => (
           <>
-            <Header name="Explore" isSearched />
+            <Header name="Explore" />
             <Explore />
             <BottomMenu />
           </>) }
@@ -177,7 +167,6 @@ function App() {
               isBack
               customLogoBoxSize="14.8rem"
               customLogoFontSize="2.5rem"
-              isSearched
             />
             <FavoriteRecipes />
             {/* <BottomMenu /> */}

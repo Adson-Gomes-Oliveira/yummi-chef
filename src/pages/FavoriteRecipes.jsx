@@ -62,7 +62,7 @@ function FavoriteRecipes() {
       </section>
       <section>
         {
-          favorites.map(({
+          favorites && favorites.map(({
             id, alcoholicOrNot, category, image, name, type, nationality,
           }, index) => (
             <span key={ id }>

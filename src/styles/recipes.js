@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 export const RecipesContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  position: relative;
+
 `;
 
 export const Carousel = styled.div`
@@ -24,8 +22,8 @@ export const Carousel = styled.div`
     &:last-of-type { margin-right: 30px; }
   }
 
-  img { 
-    width: 130px; 
+  img {
+    width: 130px;
   }
 `;
 
