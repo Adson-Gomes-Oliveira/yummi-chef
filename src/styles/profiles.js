@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const ProfileSections = styled.section`
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
     font-family: bebas , sans-serif;
 
@@ -24,6 +26,7 @@ const ProfileSections = styled.section`
         background-color: var(--base-color);
         border: none;
         border-radius: 10px;
+        max-width: 20rem;
         min-width: 20rem;
     }
 `;

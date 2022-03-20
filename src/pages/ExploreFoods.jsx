@@ -4,6 +4,7 @@ import recipesContext from '../context/recipesContext';
 import getRandomFoodAPI from '../services/getRandomFoodAPI';
 import Loading from '../components/Loading';
 import { WAIT_LOAD } from '../data';
+import ProfileSections from '../styles/profiles';
 
 export default function ExploreFoods() {
   const history = useHistory();
@@ -21,7 +22,7 @@ export default function ExploreFoods() {
 
   if (loading) { return <Loading />; }
   return (
-    <section className="explore">
+    <ProfileSections>
       <Link to="/explore/foods/ingredients">
         <button data-testid="explore-by-ingredient" type="button">By Ingredient</button>
       </Link>
@@ -36,6 +37,6 @@ export default function ExploreFoods() {
         Surprise me!
 
       </button>
-    </section>
+    </ProfileSections>
   );
 }
