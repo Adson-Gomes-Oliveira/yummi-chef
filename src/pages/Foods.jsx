@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Loading from '../components/Loading';
 import getFoodsAPI from '../services/getFoodsAPI';
 import getFoodsCategoriesAPI from '../services/getFoodsCategoriesAPI';
@@ -11,6 +11,7 @@ import { WAIT_LOAD } from '../data';
 
 function Foods() {
   const { filtredFoods, searchFoods, setLoading, loading } = useContext(recipesContext);
+  const history = useHistory();
   const [foods, setFoods] = useState(filtredFoods);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -23,13 +24,14 @@ function Foods() {
   };
 
   useEffect(() => {
-    if (filtredFoods.length === 0 && searchFoods.length === 0) {
-      fetchFoods();
-    }
-    if (searchFoods.length > 0) {
-      setFoods(searchFoods);
-    }
+    if (filtredFoods.length === 0
+      && searchFoods && searchFoods.length === 0) fetchFoods();
 
+    if (searchFoods && searchFoods.length > 1) setFoods(searchFoods);
+
+    if (searchFoods && searchFoods.length === 1) {
+      history.push(`/foods/${searchFoods[0].idMeal}`);
+    }
     const fetchCategories = async () => {
       const res = await getFoodsCategoriesAPI();
       setCategories(res);

@@ -166,10 +166,15 @@ function RecipesProvider({ children }) {
       break;
     }
     case 'Name': {
-      setLoading(true);
-      const drinksName = await searchByDrinksName(inputSearch);
-      updateSearchDrinks(drinksName);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const drinksName = await searchByDrinksName(inputSearch);
+        console.log(drinksName);
+        updateSearchDrinks(drinksName);
+        setLoading(false);
+      } catch {
+        global.alert(ALERT_MESSAGE);
+      }
       break;
     }
     case FIRST_LETTER: {

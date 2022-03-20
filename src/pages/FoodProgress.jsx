@@ -9,13 +9,14 @@ import { ButtonRecipe } from '../styles/buttons';
 import { RecipesContainer, BackgroundRecipe, HeadingRecipe, HeadingTitle,
   HeadingButtons, SideBySideList } from '../styles/recipes';
 import { Title, Subtitle, Paragraph } from '../styles/index';
+import { WAIT_LOAD } from '../data';
 
 function FoodProgress() {
   const history = useHistory();
   const { id } = useParams();
   const { updateRecipesInProgressFood, setLoading } = useContext(recipesContext);
   const [recipe, setRecipe] = useState({});
-  const [checkedIngredients, setChecked] = useState({ default: false });
+  const [checkedIngredients, setChecked] = useState([]);
   const [disableButton, setDisable] = useState(true);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
@@ -197,7 +198,7 @@ function FoodProgress() {
 
       <Paragraph data-testid="instructions">{ recipe.strInstructions }</Paragraph>
 
-      <ReactPlayer width="100%" height="40vh" url={ recipe.strYoutube } />
+      <ReactPlayer width="100%" height="40vh" light url={ recipe.strYoutube } />
 
       <ButtonRecipe
         type="button"
