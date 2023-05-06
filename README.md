@@ -1,6 +1,6 @@
 <div align="center"><h1>Yummi Chef</h1></div>
 <br />
-<div align="center"><img src="https://i.ibb.co/D8qDYzm/image.png" alt="thumbnail" /></div>
+<div align="center"><img src="https://i.ibb.co/ZYs1w4v/image.png" alt="thumbnail" /></div>
 <br />
 <br />
 <div align="center">
