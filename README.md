@@ -8,6 +8,13 @@ Projeto react de receitas culinárias, onde é possível pesquisar receitas, obt
 checklist de ingredientes, sugestões aleatórias de receitas e diversos filtros.
 </div>
 <br />
+<h4>DESENVOLVIDO EM GRUPO POR:</h4>
+
+- Adson Gomes Oliveira
+- Tatiana Bezerra [ https://github.com/biizerrah ]
+- Jean Viegas [ https://github.com/viegasjean ]
+- Marcos Vinicius [ https://github.com/MarcsVinicius ]
+
 <br />
 <h4>INSTRUÇÕES DE INSTALAÇÃO</h4>
 <details>
